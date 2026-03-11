@@ -1,0 +1,471 @@
+// main.js - RUVA Global JavaScript
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Header Scroll Effect
+    const header = document.querySelector('.site-header');
+
+    const handleScroll = () => {
+        const scrollySection = document.getElementById('scrolly-section');
+        let shouldBeSolid = false;
+
+        if (scrollySection) {
+            // Keep transparent until we scroll PAST the entire 400vh section
+            // The section ends when its bottom edge hits the top of the viewport (or slightly before)
+            // Let's make it solid when progress > 0.95 or when rect.bottom < window.innerHeight
+            const rect = scrollySection.getBoundingClientRect();
+            // If the bottom of the scrolly section is at or above the top of the viewport
+            // (meaning we have scrolled past it)
+            if (rect.bottom <= window.innerHeight) {
+                shouldBeSolid = true;
+            }
+        } else {
+            // Fallback for pages without scrolly-section
+            if (window.scrollY > 50) {
+                shouldBeSolid = true;
+            }
+        }
+
+        if (shouldBeSolid) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Init Check
+
+    // Intersection Observer for scroll animations
+    const fadeElements = document.querySelectorAll('.fade-up');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0.1
+    };
+
+    const animationObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: Unobserve after animating once
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    fadeElements.forEach(el => {
+        animationObserver.observe(el);
+    });
+
+    // --- Bounce Cards GSAP Animation Logic ---
+    const bounceContainer = document.getElementById('bounceCards');
+    if (bounceContainer && typeof gsap !== 'undefined') {
+        const cards = Array.from(bounceContainer.querySelectorAll('.card'));
+        const transformStyles = [
+            "rotate(5deg) translate(-150px)",
+            "rotate(0deg) translate(-70px)",
+            "rotate(-5deg)",
+            "rotate(5deg) translate(70px)",
+            "rotate(-5deg) translate(150px)"
+        ];
+
+        // Initial Appearance Animation
+        gsap.fromTo(
+            cards,
+            { scale: 0 },
+            {
+                scale: 1,
+                stagger: 0.08,
+                ease: 'elastic.out(1, 0.5)',
+                delay: 0.5
+            }
+        );
+
+        const getNoRotationTransform = transformStr => {
+            const hasRotate = /rotate\([\s\S]*?\)/.test(transformStr);
+            if (hasRotate) {
+                return transformStr.replace(/rotate\([\s\S]*?\)/, 'rotate(0deg)');
+            } else if (transformStr === 'none') {
+                return 'rotate(0deg)';
+            } else {
+                return `${transformStr} rotate(0deg)`;
+            }
+        };
+
+        const getPushedTransform = (baseTransform, offsetX) => {
+            const translateRegex = /translate\(([-0-9.]+)px\)/;
+            const match = baseTransform.match(translateRegex);
+            if (match) {
+                const currentX = parseFloat(match[1]);
+                const newX = currentX + offsetX;
+                return baseTransform.replace(translateRegex, `translate(${newX}px)`);
+            } else {
+                return baseTransform === 'none' ? `translate(${offsetX}px)` : `${baseTransform} translate(${offsetX}px)`;
+            }
+        };
+
+        // Hover Interaction Logic
+        const pushSiblings = hoveredIdx => {
+            cards.forEach((card, i) => {
+                gsap.killTweensOf(card);
+                const baseTransform = transformStyles[i] || 'none';
+
+                if (i === hoveredIdx) {
+                    const noRotationTransform = getNoRotationTransform(baseTransform);
+                    gsap.to(card, {
+                        transform: noRotationTransform,
+                        duration: 0.4,
+                        ease: 'back.out(1.4)',
+                        overwrite: 'auto',
+                        zIndex: 10 // Bring to front
+                    });
+                } else {
+                    const offsetX = i < hoveredIdx ? -160 : 160;
+                    const pushedTransform = getPushedTransform(baseTransform, offsetX);
+                    const distance = Math.abs(hoveredIdx - i);
+                    const delay = distance * 0.05;
+
+                    gsap.to(card, {
+                        transform: pushedTransform,
+                        duration: 0.4,
+                        ease: 'back.out(1.4)',
+                        delay: delay,
+                        overwrite: 'auto',
+                        zIndex: 1 // Push back
+                    });
+                }
+            });
+        };
+
+        const resetSiblings = () => {
+            cards.forEach((card, i) => {
+                gsap.killTweensOf(card);
+                const baseTransform = transformStyles[i] || 'none';
+                gsap.to(card, {
+                    transform: baseTransform,
+                    duration: 0.4,
+                    ease: 'back.out(1.4)',
+                    overwrite: 'auto',
+                    clearProps: "zIndex" // Reset zIndex mapping
+                });
+            });
+        };
+
+        // Attach Event Listeners to each card
+        cards.forEach((card, idx) => {
+            card.addEventListener('mouseenter', () => pushSiblings(idx));
+            card.addEventListener('mouseleave', () => resetSiblings());
+        });
+    }
+
+    // --- Spotlight Card Animation Logic ---
+    const spotlightCards = document.querySelectorAll('.card-spotlight');
+    spotlightCards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+
+    // --- Rotating Text Animation Logic ---
+    const rotatingWrapper = document.getElementById('aboutRotatingText');
+    if (rotatingWrapper && typeof gsap !== 'undefined') {
+        const textsStr = rotatingWrapper.getAttribute('data-texts');
+        if (textsStr) {
+            try {
+                const texts = JSON.parse(textsStr);
+                if (texts.length > 0) {
+                    let currentIndex = 0;
+                    const staggerDuration = 0.05;
+                    const rotationInterval = 1500; // Time each word stays visible
+
+                    const splitText = (text) => {
+                        return text.split('').map(char => {
+                            const span = document.createElement('span');
+                            span.className = 'rotate-char';
+                            span.textContent = char === ' ' ? '\u00A0' : char;
+                            return span;
+                        });
+                    };
+
+                    const showNextText = () => {
+                        const currentText = texts[currentIndex];
+                        const chars = splitText(currentText);
+
+                        rotatingWrapper.innerHTML = ''; // clear previous
+
+                        const textContainer = document.createElement('span');
+                        textContainer.className = 'rotate-text-group';
+                        chars.forEach(char => textContainer.appendChild(char));
+
+                        rotatingWrapper.appendChild(textContainer);
+
+                        // Animate In
+                        gsap.fromTo(chars,
+                            { y: "100%", opacity: 0 },
+                            {
+                                y: "0%",
+                                opacity: 1,
+                                stagger: staggerDuration,
+                                duration: 0.8,
+                                ease: "back.out(1.7)",
+                                onComplete: () => {
+                                    // Wait for the interval, then animate out
+                                    setTimeout(() => {
+                                        gsap.to(chars, {
+                                            y: "-120%",
+                                            opacity: 0,
+                                            stagger: staggerDuration,
+                                            duration: 0.6,
+                                            ease: "power2.in",
+                                            onComplete: () => {
+                                                // Trigger next text
+                                                currentIndex = (currentIndex + 1) % texts.length;
+                                                showNextText();
+                                            }
+                                        });
+                                    }, rotationInterval);
+                                }
+                            }
+                        );
+                    };
+
+                    // Start the rotation loop
+                    showNextText();
+                }
+            } catch (e) {
+                console.error("Failed to parse rotating texts", e);
+            }
+        }
+    }
+
+    // --- Tilted Cards Animation ---
+    const initTiltedCards = () => {
+        const tiltedCards = document.querySelectorAll('.tilted-card-figure');
+
+        tiltedCards.forEach(figure => {
+            const inner = figure.querySelector('.tilted-card-inner');
+            if (!inner) return;
+
+            // Configuration (matching React component)
+            const rotateAmplitude = 12;
+            const scaleOnHover = 1.05;
+
+            // Create GSAP quickTo setters for performant spring-like tracking
+            // Use "power2.out" for a snappy, springy feel
+            // GSAP strictly uses rotationX and rotationY for 3D transforms
+            const xTo = gsap.quickTo(inner, "rotationX", { duration: 0.4, ease: "power2.out" });
+            const yTo = gsap.quickTo(inner, "rotationY", { duration: 0.4, ease: "power2.out" });
+            const scaleTo = gsap.quickTo(inner, "scale", { duration: 0.4, ease: "back.out(1.5)" });
+
+            figure.addEventListener('mousemove', (e) => {
+                const rect = figure.getBoundingClientRect();
+
+                // Calculate mouse offset from the center of the element (-1 to 1 range roughly)
+                const offsetX = e.clientX - rect.left - rect.width / 2;
+                const offsetY = e.clientY - rect.top - rect.height / 2;
+
+                // Calculate rotation based on offset
+                // Note: dragging mouse UP (negative offsetY) rotates X positively (tilts up)
+                const rotationX = (offsetY / (rect.height / 2)) * -rotateAmplitude;
+                const rotationY = (offsetX / (rect.width / 2)) * rotateAmplitude;
+
+                xTo(rotationX);
+                yTo(rotationY);
+            });
+
+            figure.addEventListener('mouseenter', () => {
+                scaleTo(scaleOnHover);
+            });
+
+            figure.addEventListener('mouseleave', () => {
+                // Reset rotation and scale smoothly on leave
+                xTo(0);
+                yTo(0);
+                scaleTo(1);
+            });
+        });
+    };
+
+    // Initialize tilted cards
+    initTiltedCards();
+
+    // --- Scrollytelling Animation Logic ---
+    const initScrollytelling = () => {
+        const section = document.getElementById('scrolly-section');
+        const canvas = document.getElementById('jewellery-canvas');
+        const loader = document.getElementById('scrolly-loader');
+        const textElements = [
+            document.getElementById('scrolly-text-1'),
+            document.getElementById('scrolly-text-2'),
+            document.getElementById('scrolly-text-3'),
+            document.getElementById('scrolly-text-4')
+        ];
+
+        if (!section || !canvas || !loader) return;
+
+        const ctx = canvas.getContext('2d');
+        const frameCount = 480;
+        const images = [];
+        let loadedFrames = 0;
+        let isLooping = false;
+
+        // Configuration for text visibility [startFadeIn, fullyVisible, startFadeOut, fullyHidden]
+        // Mapped to frame indexes
+        const textTimings = [
+            [0, 10, 60, 80],       // Text 1: "Crafted for Her Moment"
+            [120, 140, 180, 200],  // Text 2: "Every detail begins with intention"
+            [220, 240, 300, 320],  // Text 3: "Each stone and setting..."
+            [380, 400, 440, 460]   // Text 4: "A design created only for her"
+        ];
+
+        // 1. Preload Images
+        for (let i = 1; i <= frameCount; i++) {
+            const img = new Image();
+            // Pad index with zeros: 1 -> 0001
+            const paddedIndex = i.toString().padStart(4, '0');
+            img.src = `frames/frame_${paddedIndex}.webp`;
+
+            const onLoadOrError = () => {
+                loadedFrames++;
+                if (loadedFrames === frameCount) {
+                    // All images loaded
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 1000);
+                    handleResize(); // Initial draw
+                    startAnimationLoop();
+                }
+            };
+
+            img.onload = onLoadOrError;
+            img.onerror = onLoadOrError;
+            images.push(img);
+        }
+
+        // 2. Responsive Canvas Scaling (Contain algorithm)
+        const renderFrame = (frameIndex) => {
+            const img = images[frameIndex];
+            if (!img || !img.complete) return;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Calculate "cover" ratios to fill the screen
+            const hRatio = canvas.width / img.width;
+            const vRatio = canvas.height / img.height;
+            const ratio = Math.max(hRatio, vRatio); // Changed to Math.max for 'cover' filling
+
+            const centerShift_x = (canvas.width - img.width * ratio) / 2;
+            const centerShift_y = (canvas.height - img.height * ratio) / 2;
+
+            ctx.drawImage(
+                img,
+                0, 0, img.width, img.height,
+                centerShift_x, centerShift_y, img.width * ratio, img.height * ratio
+            );
+        };
+
+        const handleResize = () => {
+            // Match canvas drawing buffer to screen logical pixels
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // Re-render current frame based on scroll
+            updateScrollProgress();
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // 3. Scroll Tracking & Text Interpolation
+        let currentScrollProgress = 0;
+        let lastRenderedFrame = -1;
+
+        const interpolateOpacity = (currentFrame, timings) => {
+            const [startIn, fullIn, startOut, fullOut] = timings;
+
+            if (currentFrame < startIn) return 0;
+            if (currentFrame >= startIn && currentFrame < fullIn) {
+                // Fading in
+                return (currentFrame - startIn) / (fullIn - startIn);
+            }
+            if (currentFrame >= fullIn && currentFrame < startOut) {
+                // Fully visible
+                return 1;
+            }
+            if (currentFrame >= startOut && currentFrame < fullOut) {
+                // Fading out
+                return 1 - ((currentFrame - startOut) / (fullOut - startOut));
+            }
+            return 0; // After fullOut
+        };
+
+        const updateScrollProgress = () => {
+            const rect = section.getBoundingClientRect();
+
+            // Calculate progress 0 -> 1 based on section top & height
+            // rect.top is 0 when the top of the section hits the top of viewport.
+            // When rect.bottom hits the bottom of the viewport, progress should be 1.
+            const totalScrollableDistance = rect.height - window.innerHeight;
+            let progress = -rect.top / totalScrollableDistance;
+
+            // Clamp progress between 0 and 1
+            progress = Math.max(0, Math.min(1, progress));
+
+            // Determine frame
+            const targetFrame = Math.floor(progress * (frameCount - 1));
+
+            // Hide the fixed container completely if we scroll past the 400vh section
+            // This prevents it from bleeding through semi-transparent footers/sections
+            const fixedContainer = document.querySelector('.scrolly-fixed');
+            if (fixedContainer) {
+                // Ensure smooth transition
+                fixedContainer.style.transition = 'opacity 0.5s ease-out';
+                if (progress >= 1) {
+                    fixedContainer.style.opacity = '0';
+                    fixedContainer.style.pointerEvents = 'none';
+                } else {
+                    fixedContainer.style.opacity = '1';
+                    fixedContainer.style.pointerEvents = 'auto';
+                }
+            }
+
+            // Only draw and process if frame changed or on initial load
+            if (targetFrame !== lastRenderedFrame) {
+                renderFrame(targetFrame);
+                lastRenderedFrame = targetFrame;
+
+                // Sync Text Opacities
+                textTimings.forEach((timings, idx) => {
+                    const el = textElements[idx];
+                    if (el) {
+                        el.style.opacity = interpolateOpacity(targetFrame, timings).toString();
+                        // Optional: slightly translate Y based on opacity for subtle float effect
+                        // const yOffset = (1 - el.style.opacity) * 10;
+                        // el.style.transform = `translateY(${yOffset}px)`;
+                    }
+                });
+            }
+        };
+
+        const startAnimationLoop = () => {
+            if (isLooping) return;
+            isLooping = true;
+
+            const loop = () => {
+                updateScrollProgress();
+                requestAnimationFrame(loop);
+            };
+            requestAnimationFrame(loop);
+        };
+    };
+
+    // Initialize scrollytelling
+    initScrollytelling();
+
+});

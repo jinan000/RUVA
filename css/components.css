@@ -1,0 +1,398 @@
+/* components.css - RUVA UI Components */
+
+/* Navigation */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    transition: background-color var(--transition-med);
+}
+
+.site-header.scrolled {
+    background-color: var(--clr-background-dark);
+    /* Pure dark background */
+    border-bottom: 1px solid rgba(198, 167, 94, 0.15);
+    /* Soft gold border beneath */
+    backdrop-filter: blur(10px);
+}
+
+.site-header.scrolled .brand-logo,
+.site-header.scrolled .nav-links a {
+    color: var(--clr-text-primary);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    transition: transform var(--transition-fast);
+}
+
+.brand-logo:hover .header-logo {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+}
+
+.nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--clr-accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-fast);
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.burger-line {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background-color: var(--clr-text-primary);
+    margin-bottom: 6px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.burger-line:last-child {
+    margin-bottom: 0;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 3.5rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--clr-accent);
+    background-color: transparent;
+    color: var(--clr-accent);
+    cursor: pointer;
+    border-radius: 4px;
+    /* Minimal rounded shape */
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btn:hover {
+    background-color: var(--clr-text-secondary);
+    color: var(--clr-bg);
+}
+
+.btn-primary {
+    background-color: var(--clr-accent);
+    color: var(--clr-bg);
+}
+
+.btn-primary:hover {
+    background-color: var(--clr-accent-hover);
+    border-color: var(--clr-accent-hover);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    color: var(--clr-text-secondary);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    padding: 1rem 1rem;
+    background: var(--clr-background-dark);
+    border: 1px solid var(--clr-text-secondary);
+    color: var(--clr-text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--clr-accent);
+    box-shadow: 0 0 10px rgba(198, 167, 94, 0.15);
+    /* Very soft gold glow */
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Layout Blocks */
+.content-block {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.content-block p {
+    margin: 0 auto 1.5rem;
+}
+
+/* Animation Utilities */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+
+/* Bounce Cards Animation Component */
+.bounceCardsContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 400px;
+}
+
+.card {
+    position: absolute;
+    width: 200px;
+    aspect-ratio: 1;
+    border: 5px solid var(--clr-surface);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.card .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Spotlight Card Component */
+.card-spotlight {
+    position: relative;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(198, 167, 94, 0.15);
+    /* RUVA matching border */
+    background-color: var(--clr-surface);
+    padding: 2rem;
+    overflow: hidden;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    --spotlight-color: rgba(255, 255, 255, 0.05);
+}
+
+.card-spotlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 80%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.card-spotlight:hover::before,
+.card-spotlight:focus-within::before {
+    opacity: 0.6;
+}
+
+/* --- Global Footer Styles --- */
+.site-footer {
+    background-color: var(--clr-surface);
+    padding: 4rem 5%;
+    border-top: 1px solid rgba(198, 167, 94, 0.15);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.footer-brand {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.footer-links a {
+    font-size: 0.85rem;
+    color: var(--clr-text-secondary);
+}
+
+.footer-links a:hover {
+    color: var(--clr-text-primary);
+}
+
+.footer-bottom {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(198, 167, 94, 0.15);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--clr-text-secondary);
+    max-width: var(--container-max-width);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Rotating Text Component --- */
+.rotating-text-wrapper {
+    display: inline-flex;
+    position: relative;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.rotate-text-group {
+    display: inline-flex;
+    white-space: nowrap;
+}
+
+.rotate-char {
+    display: inline-block;
+    /* Allows transform (y-axis translation) to work on spans */
+}
+
+/* ==========================================================================
+   Tilted Card Component
+   ========================================================================== */
+
+.tilted-card-figure {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Added fixed height to make perspective visible */
+    min-height: 300px;
+    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    cursor: pointer;
+}
+
+.tilted-card-inner {
+    position: relative;
+    transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+    border-radius: 15px;
+}
+
+.tilted-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    will-change: transform;
+    transform: translateZ(40px);
+    /* 3D float distance */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem;
+    text-align: center;
+    pointer-events: none;
+    /* Let the figure handle hover */
+}

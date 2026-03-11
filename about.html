@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About RUVA | The Brand Story</title>
+    <meta name="description"
+        content="Discover the story behind RUVA. We believe jewellery should be created to suit the bride — not the bride to suit the jewellery.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .page-header {
+            padding-top: calc(var(--nav-height) + 4rem);
+            padding-bottom: 0;
+            text-align: center;
+        }
+
+        .story-section {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .story-text p {
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .story-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-quote {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            line-height: 1.3;
+            color: var(--clr-accent);
+            text-align: center;
+            margin: 4rem 0;
+            padding: 0 5%;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: rgba(26, 26, 26, 0.4);
+            /* Semi-transparent dark background for glass effect */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(198, 167, 94, 0.15);
+            /* Slightly more visible border */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            /* Depth for the glass */
+            height: 300px;
+            /* Fixed height for the tilt effect */
+        }
+
+        .form-framework-section {
+            background-color: var(--clr-surface);
+            color: var(--clr-text-primary);
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+
+        .form-framework-section h2 {
+            color: var(--clr-text-primary);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(252, 252, 250, 0.2);
+        }
+
+        .form-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .form-letter {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            color: var(--clr-accent);
+            line-height: 1;
+        }
+
+        .form-content h3 {
+            color: var(--clr-text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-content p {
+            color: var(--clr-text-secondary);
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            .form-item {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="img/logo.jpg" alt="RUVA" class="header-logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="about.html">About RUVA</a></li>
+                    <li><a href="process.html">Design Process</a></li>
+                    <li><a href="contact.html">Book Consultation</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Open Menu">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header relative">
+            <div class="container fade-up">
+                <h1>The Story of RUVA</h1>
+                <p
+                    style="margin-top: 1rem; margin-bottom: 3rem; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem;">
+                    Intention & Craft</p>
+            </div>
+        </section>
+
+        <!-- Brand Story -->
+        <section class="section" style="padding-top: 3rem;">
+            <div class="container story-section fade-up">
+                <div class="story-text">
+                    <p>Every bride spends months choosing her outfit.</p>
+
+                    <div
+                        style="font-size: clamp(2rem, 5vw, 3.5rem); margin: 0.5rem 0; font-family: var(--font-heading); color: var(--clr-accent); text-align: center;">
+                        <span>The </span>
+                        <span class="rotating-text-wrapper" id="aboutRotatingText"
+                            data-texts='["colour.", "fabric.", "embroidery."]'></span>
+                    </div>
+                    <p>The smallest details are carefully considered.</p>
+
+                    <p>But when it comes to jewellery, most brides are left to adjust — choosing from what already
+                        exists.</p>
+
+                    <div class="highlight-quote">
+                        "At RUVA, we believe it should be the other way around. Jewellery should be created to suit the
+                        bride — not the bride to suit the jewellery."
+                    </div>
+
+                    <p>RUVA was founded with a simple purpose: to design gold and diamond pieces that are made
+                        specifically for a bride's attire, personality, and comfort.</p>
+                    <p>We begin with what she has chosen to wear. We study the neckline, the tones, the craftsmanship of
+                        the outfit. Then we design jewellery that complements it naturally — in proportion, weight, and
+                        presence.</p>
+                    <p>Each piece is created only after it is commissioned. This allows us to focus on precision,
+                        quality, and thoughtful detailing. No excess. No compromise. Only pieces that feel complete when
+                        worn.</p>
+                    <p>RUVA is for brides who value intention — who want jewellery that feels personal, considered, and
+                        lasting.</p>
+                    <div class="font-heading"
+                        style="font-style: italic; font-size: 1.5rem; margin-top: 3rem; text-align: center; color: var(--clr-text-primary);">
+                        Because bridal jewellery is not just worn for a day.<br>It becomes part of a family story.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision & Core Values -->
+        <section class="section" style="padding-top: max(8rem, 15vh); padding-bottom: 6rem;">
+            <div class="container flex-col" style="align-items: center; text-align: center;">
+                <div class="text-overline" style="margin-bottom: 2rem;">
+                    Our Story
+                </div>
+                <h1 class="font-heading split-text" style="max-width: 900px; margin-bottom: 2rem;">A Legacy of Elegance
+                </h1>
+                <p style="max-width: 700px; font-size: 1.125rem;">Founded on a passion for impeccable design and
+                    uncompromising quality, RUVA creates bespoke jewellery that transcends generations. We believe every
+                    piece
+                    should be as unique as the individual who wears it.</p>
+
+                <div class="values-grid fade-up" style="width: 100%;">
+                    <figure class="tilted-card-figure">
+                        <div class="tilted-card-inner value-card">
+                            <div class="tilted-card-overlay">
+                                <h3
+                                    style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">
+                                    Intentionality
+                                </h3>
+                                <p>Every design choice is purposeful. We create without excess, focusing entirely on
+                                    harmony with the wearer.</p>
+                            </div>
+                        </div>
+                    </figure>
+
+                    <figure class="tilted-card-figure">
+                        <div class="tilted-card-inner value-card">
+                            <div class="tilted-card-overlay">
+                                <h3
+                                    style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">
+                                    Precision
+                                </h3>
+                                <p>From the first sketch to the final setting, our craftsmanship demands exacting
+                                    standards of execution.</p>
+                            </div>
+                        </div>
+                    </figure>
+
+                    <figure class="tilted-card-figure">
+                        <div class="tilted-card-inner value-card">
+                            <div class="tilted-card-overlay">
+                                <h3
+                                    style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">
+                                    Integrity
+                                </h3>
+                                <p>We source materials transparently and use only the highest caliber of gold and
+                                    diamonds in our studios.</p>
+                            </div>
+                        </div>
+                    </figure>
+
+                    <figure class="tilted-card-figure">
+                        <div class="tilted-card-inner value-card">
+                            <div class="tilted-card-overlay">
+                                <h3
+                                    style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">
+                                    Comfort
+                                </h3>
+                                <p>True luxury must be wearable. Our pieces are engineered to feel as beautiful as they
+                                    look on the skin.</p>
+                            </div>
+                        </div>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- The F.O.R.M Framework -->
+        <section class="form-framework-section">
+            <div class="container fade-up">
+                <span
+                    style="text-align: center; display: block; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; color: var(--clr-accent);">Methodology</span>
+                <h2>The F.O.R.M Framework</h2>
+
+                <div class="form-grid">
+                    <div class="form-item">
+                        <div class="form-letter">F</div>
+                        <div class="form-content">
+                            <h3>Fit & Proportion</h3>
+                            <p>We study the wearer's anatomy and attire to ensure scale, weight, and silhouette sit
+                                effortlessly against the body.</p>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-letter">O</div>
+                        <div class="form-content">
+                            <h3>Occasion & Outfit</h3>
+                            <p>Every piece is a response to the chosen attire. We complement necklines, fabrics, and
+                                tones rather than competing with them.</p>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-letter">R</div>
+                        <div class="form-content">
+                            <h3>Refinement in Craft</h3>
+                            <p>We execute our vision with masterful goldsmithing, ensuring the reverse is as flawlessly
+                                finished as the front.</p>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div class="form-letter">M</div>
+                        <div class="form-content">
+                            <h3>Meaning & Memory</h3>
+                            <p>We embed personal significance into the design, creating modern heirlooms that carry
+                                their story forward.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Action -->
+        <section class="section" style="text-align: center; padding: 6rem 5%;">
+            <h2 class="fade-up" style="margin-bottom: 2rem;">Ready to begin your story?</h2>
+            <a href="process.html" class="btn fade-up">Discover Our Process</a>
+        </section>
+    </main>
+
+    <!-- Footer ... -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">RUVA</div>
+                <p style="font-size: 0.85rem; max-width: 300px;">Crafted for Her Moment. Bespoke bridal jewellery
+                    designed around attire, proportion, and presence.</p>
+            </div>
+
+            <div class="footer-links" style="grid-column: 2 / -1; display: flex; justify-content: space-between;">
+                <div>
+                    <h4 class="text-overline">Explore</h4>
+                    <ul>
+                        <li><a href="about.html">About RUVA</a></li>
+                        <li><a href="process.html">The Process</a></li>
+                        <li><a href="#">Bespoke</a></li>
+                        <li><a href="#">Collections</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-overline">Information</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Delivery & Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-overline">Contact</h4>
+                    <ul>
+                        <li><a href="contact.html">Book Appointment</a></li>
+                        <li><a href="mailto:studio@ruvastudio.com">studio@ruvastudio.com</a></li>
+                        <li><a href="#">+44 (0) 20 7123 4567</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>&copy;
+                <script>document.write(new Date().getFullYear())</script> RUVA Studio. All rights reserved.
+            </span>
+            <span>Design by Antigravity Studio</span>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

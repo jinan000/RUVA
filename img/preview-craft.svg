@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600">
+    <rect width="1200" height="1600" fill="#EAE8E3" />
+    <path d="M400,400 C600,1000 800,400 800,400" fill="none" stroke="#C8B598" stroke-width="4" stroke-opacity="0.8"/>
+    <polygon points="600,850 630,920 600,980 570,920" fill="#2D2B2A"/>
+    <text x="600" y="1400" font-family="sans-serif" font-size="24" text-anchor="middle" fill="#5C5A58" letter-spacing="4" text-transform="uppercase">Visualisation 02</text>
+</svg>

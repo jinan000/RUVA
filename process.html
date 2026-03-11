@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Process | RUVA Bespoke Studio</title>
+    <meta name="description"
+        content="Explore the RUVA bespoke jewellery design process. From discovery to final reveal, we craft diamond and gold jewellery around you.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .page-header {
+            padding-top: calc(var(--nav-height) + 4rem);
+            padding-bottom: 4rem;
+            text-align: center;
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 100%;
+            background-color: rgba(198, 167, 94, 0.2);
+            /* Gold subtle line */
+            z-index: 1;
+        }
+
+        .timeline-item {
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 2.5rem;
+            background-color: var(--clr-background-dark);
+            border: 1px solid rgba(198, 167, 94, 0.1);
+            position: relative;
+        }
+
+        .timeline-step {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--clr-bg);
+            border: 1px solid var(--clr-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--clr-accent);
+            z-index: 3;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-content p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-container::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+                margin-top: 1rem;
+            }
+
+            .timeline-step {
+                left: 30px;
+                top: 0;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .expectations-bar {
+            background-color: var(--clr-text-primary);
+            color: var(--clr-bg);
+            text-align: center;
+            padding: 3rem 5%;
+            margin: 6rem 0;
+        }
+
+        .expectations-bar p {
+            color: var(--clr-bg);
+            margin: 0;
+            font-size: 1.125rem;
+            font-family: var(--font-heading);
+            letter-spacing: 0.05em;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(198, 167, 94, 0.15);
+            padding: 2rem 0;
+        }
+
+        .faq-item:first-child {
+            border-top: 1px solid rgba(198, 167, 94, 0.15);
+        }
+
+        .faq-question {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--clr-text-primary);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Using basic block display for FAQ answers for simplicity without heavy JS */
+        .faq-answer {
+            color: var(--clr-text-secondary);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="img/logo.jpg" alt="RUVA" class="header-logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="about.html">About RUVA</a></li>
+                    <li><a href="process.html">Design Process</a></li>
+                    <li><a href="contact.html">Book Consultation</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Open Menu">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="section" style="padding-top: max(8rem, 15vh);">
+            <div class="container flex-col" style="align-items: center; text-align: center;">
+                <div class="text-overline" style="margin-bottom: 2rem;">
+                    The Bespoke Journey
+                </div>
+                <h1 class="font-heading split-text" style="max-width: 900px; margin-bottom: 2rem;">From Concept to
+                    Creation</h1>
+                <p style="max-width: 700px; font-size: 1.125rem;">Creating a custom piece of jewellery is an intimate
+                    and
+                    collaborative experience. At RUVA, we guide you through every step of this journey, ensuring the
+                    final
+                    creation is as unique as the story it represents.</p>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="section">
+            <div class="container">
+                <div class="timeline-container fade-up">
+
+                    <div class="timeline-item">
+                        <div class="timeline-step">1</div>
+                        <div class="timeline-content">
+                            <h3>Discovery</h3>
+                            <p>We begin by understanding you. In our first consultation, we discuss your outfit,
+                                personality, occasion, and timeline. This establishes the foundational constraints and
+                                inspiration for the design.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-step">2</div>
+                        <div class="timeline-content">
+                            <h3>Design & Concepts</h3>
+                            <p>Our studio translates your vision into detailed sketches and design concepts. We explore
+                                proportions and material balances, refining through revisions until the piece perfectly
+                                reflects your intention.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-step">3</div>
+                        <div class="timeline-content">
+                            <h3>Meticulous Craft</h3>
+                            <p>Upon design approval, we source the precise diamonds and gold required. Our master
+                                goldsmiths begin the careful work of bringing the piece to life, ensuring exceptional
+                                quality control at every stage.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-step">4</div>
+                        <div class="timeline-content">
+                            <h3>Finalisation</h3>
+                            <p>The completed piece undergoes a final fitting to ensure exquisite comfort and scale. Once
+                                finished to perfection, we beautifully package and deliver your commission.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="expectations-bar fade-up">
+            <p>Typical Timeline Expectation: 4 to 8 Weeks</p>
+        </div>
+
+        <!-- FAQ -->
+        <section class="section faq-section fade-up">
+            <h2 style="text-align: center; margin-bottom: 4rem;">Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">How long does custom bridal jewellery take?</div>
+                <div class="faq-answer">On average, a bespoke piece requires between 4 to 8 weeks from the initial
+                    discovery consultation to the final delivery. This allows us the necessary time to refine designs
+                    and execute the craftsmanship to our stringent standards.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I customise diamond shapes?</div>
+                <div class="faq-answer">Absolutely. We work intimately with trusted diamantaires to source specific
+                    cuts, clarities, and colors that align seamlessly with your finalized design.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you work outside weddings?</div>
+                <div class="faq-answer">While our expertise is deeply rooted in bridal creations, we regularly
+                    commission bespoke pieces for anniversaries, milestone achievements, and personal heritage
+                    collections. The journey remains the same.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How is pricing structured?</div>
+                <div class="faq-answer">Because every piece is entirely bespoke, pricing varies significantly based on
+                    material complexity, diamond selection, and design intricacy. After our Discovery phase, we provide
+                    a structured transparent proposal for your approval.</div>
+            </div>
+        </section>
+
+        <!-- Next Action -->
+        <section class="section" style="text-align: center; padding: 4rem 5% 6rem 5%;">
+            <a href="contact.html" class="btn fade-up">Schedule a Consultation</a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">RUVA</div>
+                <p style="font-size: 0.85rem; max-width: 300px;">Crafted for Her Moment. Bespoke bridal jewellery
+                    designed around attire, proportion, and presence.</p>
+            </div>
+
+            <div class="footer-links" style="grid-column: 2 / -1; display: flex; justify-content: space-between;">
+                <div>
+                    <h4 class="text-overline">Explore</h4>
+                    <ul>
+                        <li><a href="about.html">About RUVA</a></li>
+                        <li><a href="process.html">The Process</a></li>
+                        <li><a href="#">Bespoke</a></li>
+                        <li><a href="#">Collections</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-overline">Information</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Delivery & Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-overline">Contact</h4>
+                    <ul>
+                        <li><a href="contact.html">Book Appointment</a></li>
+                        <li><a href="mailto:studio@ruvastudio.com">studio@ruvastudio.com</a></li>
+                        <li><a href="#">+44 (0) 20 7123 4567</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>&copy;
+                <script>document.write(new Date().getFullYear())</script> RUVA Studio. All rights reserved.
+            </span>
+            <span>Design by Antigravity Studio</span>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

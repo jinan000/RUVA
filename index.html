@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUVA | Custom Bridal Jewellery Design Studio</title>
+    <meta name="description"
+        content="RUVA is a premium jewellery design studio creating bespoke gold and diamond pieces crafted specifically for a bride's attire, personality, and moment.">
+    <meta name="keywords"
+        content="custom bridal jewellery, designer gold jewellery, custom diamond jewellery, wedding jewellery design">
+
+    <!-- SEO & Performance -->
+    <link rel="canonical" href="https://www.ruvastudio.com/">
+    <meta property="og:title" content="RUVA | Crafted for Her Moment">
+    <meta property="og:description"
+        content="Jewellery designed around her — not chosen to fit. Bespoke, personalized bridal creations.">
+    <meta property="og:type" content="website">
+
+    <!-- Preload Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <style>
+        /* Home Page Specific Styles */
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background-color: var(--clr-background-dark);
+            /* Deeper than main bg */
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 5%;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--clr-text-secondary);
+            /* Gold Tone Muted */
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 300;
+            color: var(--clr-text-primary);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .hero-motion-graphic {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            /* Larger to simulate subtle background depth not light pulse */
+            height: 1000px;
+            opacity: 0.05;
+            pointer-events: none;
+            background: radial-gradient(circle, var(--clr-accent) 0%, transparent 50%);
+            /* Using gold accent glow very subtle */
+        }
+
+        .idea-section {
+            background-color: var(--clr-surface);
+            text-align: center;
+            position: relative;
+            /* Ensure it layers over fixed background */
+            z-index: 2;
+            /* Cover the scrolly section */
+        }
+
+        .idea-text {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            line-height: 1.4;
+            color: var(--clr-text-primary);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* The RUVA Way */
+        .ruva-way-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%;
+        }
+
+        .step-number {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            color: var(--clr-accent);
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+            display: block;
+            line-height: 1;
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Craft & Standards */
+        .craft-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 900px) {
+            .craft-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .craft-list {
+            list-style: none;
+        }
+
+        .craft-list li {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(45, 43, 42, 0.1);
+            display: flex;
+            align-items: baseline;
+        }
+
+        .craft-list li:last-child {
+            border-bottom: none;
+        }
+
+        .craft-label {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            min-width: 140px;
+        }
+
+        /* Visual Preview */
+        .visual-preview {
+            padding: 0;
+            /* Full width */
+        }
+
+        .image-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .gallery-wrap {
+            position: relative;
+            width: 100%;
+            height: clamp(400px, 70vh, 900px);
+            overflow: hidden;
+            margin-bottom: 1px;
+        }
+
+        .gallery-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+            filter: brightness(0.95);
+        }
+
+        /* Hover Interaction (Option C implementation) */
+        .gallery-wrap:hover img {
+            transform: scale(1.03);
+            filter: brightness(1.05);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 2rem;
+            left: 5%;
+            color: var(--clr-white);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity var(--transition-med), transform var(--transition-med);
+        }
+
+        .gallery-wrap:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background-color: var(--clr-surface);
+            text-align: center;
+            padding-top: 8rem;
+            padding-bottom: 8rem;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 3rem;
+            color: var(--clr-text-primary);
+        }
+
+        .preview-form {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .cta-submit {
+            margin-top: 2rem;
+            width: 100%;
+            background-color: transparent;
+            color: var(--clr-accent);
+            border: 1px solid var(--clr-accent);
+        }
+
+        .cta-submit:hover {
+            background-color: var(--clr-accent-hover);
+            color: var(--clr-bg);
+            border-color: var(--clr-accent-hover);
+        }
+    </style>
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "JewelryStore",
+      "name": "RUVA",
+      "image": "https://www.ruvastudio.com/img/og-image.jpg",
+      "description": "Premium bespoke bridal jewellery design studio.",
+      "url": "https://www.ruvastudio.com/",
+      "priceRange": "$$$"
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="img/logo.jpg" alt="RUVA" class="header-logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="about.html">About RUVA</a></li>
+                    <li><a href="process.html">Design Process</a></li>
+                    <li><a href="contact.html">Book Consultation</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Open Menu">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Scrollytelling Hero Section -->
+        <section id="scrolly-section">
+            <div class="scrolly-fixed">
+
+                <!-- Loading State overlay -->
+                <div id="scrolly-loader">
+                    <div class="spinner"></div>
+                    <p>Loading Experience</p>
+                </div>
+
+                <!-- Canvas for drawing the heavy frame sequence -->
+                <canvas id="jewellery-canvas"></canvas>
+
+                <!-- Text Overlay Container -->
+                <div class="scrolly-text-container">
+
+                    <!-- Text 1: Frames 0-80 -->
+                    <div id="scrolly-text-1" class="scrolly-text text-center text-hero">
+                        <h2 class="animated-gradient-text">Crafted for Her Moment</h2>
+                    </div>
+
+                    <!-- Text 2: Frames 120-200 -->
+                    <div id="scrolly-text-2" class="scrolly-text text-left">
+                        <h2 class="animated-gradient-text">Every detail begins with intention</h2>
+                    </div>
+
+                    <!-- Text 3: Frames 220-320 -->
+                    <div id="scrolly-text-3" class="scrolly-text text-right">
+                        <h2 class="animated-gradient-text">Each stone and setting designed in harmony</h2>
+                    </div>
+
+                    <!-- Text 4: Frames 380-460 -->
+                    <div id="scrolly-text-4" class="scrolly-text text-center text-cta">
+                        <h2 class="animated-gradient-text">RUVA</h2>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Content that scrolls OVER the fixed hero -->
+        <div class="content-over-scrolly">
+
+            <!-- Section 2 – The Idea -->
+            <section class="section idea-section">
+                <div class="container fade-up">
+                    <p class="idea-text">
+                        Jewellery designed around the wearer.<br>
+                        Created in response to attire, proportion, and moment.<br>
+                        Personalised gold and diamond creations.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 3 – The RUVA Way (Preview) -->
+            <section class="section">
+                <div class="container">
+                    <div class="content-block fade-up">
+                        <h2
+                            style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2rem;">
+                            The Process</h2>
+                    </div>
+
+                    <div class="ruva-way-grid fade-up">
+                        <div class="process-step card-spotlight" style="--spotlight-color: rgba(0, 229, 255, 0.2);">
+                            <span class="step-number">01</span>
+                            <h3 class="step-title">Discovery</h3>
+                            <p>Understanding outfit, personality, and timeline.</p>
+                        </div>
+                        <div class="process-step card-spotlight" style="--spotlight-color: rgba(0, 229, 255, 0.2);">
+                            <span class="step-number">02</span>
+                            <h3 class="step-title">Design</h3>
+                            <p>Sketches, concepts, and refined revisions.</p>
+                        </div>
+                        <div class="process-step card-spotlight" style="--spotlight-color: rgba(0, 229, 255, 0.2);">
+                            <span class="step-number">03</span>
+                            <h3 class="step-title">Craft</h3>
+                            <p>Material sourcing and meticulous goldsmith work.</p>
+                        </div>
+                        <div class="process-step card-spotlight" style="--spotlight-color: rgba(0, 229, 255, 0.2);">
+                            <span class="step-number">04</span>
+                            <h3 class="step-title">Reveal</h3>
+                            <p>Fitting, finishing, and final delivery.</p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 4rem;" class="fade-up">
+                        <a href="process.html" class="btn">Explore The Full Process</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4 – Craft & Standards -->
+            <section class="section idea-section">
+                <div class="container">
+                    <div class="craft-grid">
+                        <div class="fade-up" style="text-align: left;">
+                            <h2 style="margin-bottom: 1.5rem;">Uncompromising Standards</h2>
+                            <p>We believe that luxury lies in intention. Every piece is commissioned to ensure
+                                precision,
+                                quality, and thoughtful detailing. No excess. No compromise.</p>
+                            <p style="margin-top: 1rem;">Only pieces that feel complete when worn.</p>
+                        </div>
+
+                        <div class="fade-up">
+                            <ul class="craft-list">
+                                <li>
+                                    <span class="craft-label">Materials</span>
+                                    <span>Exceptional gold and diamond quality</span>
+                                </li>
+                                <li>
+                                    <span class="craft-label">Design</span>
+                                    <span>Meticulous attention to proportion</span>
+                                </li>
+                                <li>
+                                    <span class="craft-label">Wearability</span>
+                                    <span>Engineered for lifelong comfort</span>
+                                </li>
+                                <li>
+                                    <span class="craft-label">Sourcing</span>
+                                    <span>Absolute integrity in origins</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5 – The Collection (Bounce Cards) -->
+            <section class="section visual-preview"
+                style="background-color: var(--clr-background-dark); text-align: center; padding-top: 6rem; padding-bottom: 8rem; overflow: hidden;">
+                <div class="container fade-up">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--clr-text-primary);">Timeless Designs, Crafted Your
+                        Way
+                    </h2>
+                    <p style="margin: 0 auto 4rem auto; max-width: 800px;">
+                        Browse through our collection of stunning jewellery pieces crafted with precision and artistry.
+                        Whether you prefer classic elegance or modern sophistication, we also offer customization to
+                        help
+                        you create jewellery that is uniquely personal and meaningful.
+                    </p>
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center; min-height: 400px;"
+                    class="fade-up">
+                    <div class="bounceCardsContainer custom-bounceCards" id="bounceCards"
+                        style="width: 500px; height: 250px;">
+                        <!-- 5 images from the Bounce cards folder -->
+                        <div class="card card-0" style="transform: rotate(5deg) translate(-150px);">
+                            <img class="image" src="Bounce cards/Whisk_876672e06b82f10b342428ca658b79cddr.png"
+                                alt="Card 0">
+                        </div>
+                        <div class="card card-1" style="transform: rotate(0deg) translate(-70px);">
+                            <img class="image" src="Bounce cards/Whisk_b15209096bb379f99e446761add92a5bdr.png"
+                                alt="Card 1">
+                        </div>
+                        <div class="card card-2" style="transform: rotate(-5deg);">
+                            <img class="image" src="Bounce cards/Whisk_c436b072ef4b31c8b6b44ed90d64b5f7dr.png"
+                                alt="Card 2">
+                        </div>
+                        <div class="card card-3" style="transform: rotate(5deg) translate(70px);">
+                            <img class="image" src="Bounce cards/Whisk_d4559c52379cb849dda41721c5ad5258dr.png"
+                                alt="Card 3">
+                        </div>
+                        <div class="card card-4" style="transform: rotate(-5deg) translate(150px);">
+                            <img class="image" src="Bounce cards/Whisk_da358c2ad7cd6bcb6234f7f975cd3a58dr.png"
+                                alt="Card 4">
+                        </div>
+                    </div>
+            </section>
+
+            <!-- Section 6 – Enquiry Call-to-Action -->
+            <section class="section cta-section">
+                <div class="container fade-up">
+                    <h2>Begin Your Design</h2>
+
+                    <form class="preview-form" action="contact.html">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                        </div>
+
+                        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="occasion">Occasion</label>
+                                <input type="text" id="occasion" name="occasion" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary cta-submit">Continue to Consultation</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">RUVA</div>
+                <p style="font-size: 0.85rem; max-width: 300px;">Crafted for Her Moment. Bespoke bridal jewellery
+                    designed around attire, proportion, and presence.</p>
+            </div>
+
+            <div class="footer-links" style="grid-column: 2 / -1; display: flex; justify-content: space-between;">
+                <div>
+                    <h4 class="text-overline">Explore</h4>
+                    <ul>
+                        <li><a href="about.html">About RUVA</a></li>
+                        <li><a href="process.html">The Process</a></li>
+                        <li><a href="#">Bespoke</a></li>
+                        <li><a href="#">Collections</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-overline">Information</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Delivery & Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-overline">Contact</h4>
+                    <ul>
+                        <li><a href="contact.html">Book Appointment</a></li>
+                        <li><a href="mailto:studio@ruvastudio.com">studio@ruvastudio.com</a></li>
+                        <li><a href="#">+44 (0) 20 7123 4567</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>&copy;
+                <script>document.write(new Date().getFullYear())</script> RUVA Studio. All rights reserved.
+            </span>
+            <span>Design by Antigravity Studio</span>
+        </div>
+    </footer>
+
+    <!-- Placeholders for Integrations -->
+    <!-- Google Analytics placeholder -->
+    <script>
+        // window.dataLayer = window.dataLayer || [];
+        // function gtag(){dataLayer.push(arguments);}
+        // gtag('js', new Date());
+        // gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

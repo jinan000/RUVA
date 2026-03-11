@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Consultation | RUVA Bespoke Studio</title>
+    <meta name="description"
+        content="Begin your design journey with RUVA. Schedule a consultation for your bespoke bridal jewellery.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .page-header {
+            padding-top: calc(var(--nav-height) + 4rem);
+            padding-bottom: 2rem;
+            text-align: center;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 6rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-bottom: 6rem;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+        }
+
+        /* Contact Details Panel */
+        .contact-info-panel {
+            background-color: var(--clr-background-dark);
+            padding: 3rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .info-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--clr-text-secondary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .info-value {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--clr-text-primary);
+        }
+
+        .social-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid var(--clr-text-primary);
+            padding-bottom: 2px;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #25D366;
+            color: white;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .whatsapp-btn:hover {
+            opacity: 0.9;
+            color: white;
+        }
+
+        /* Form Styling */
+        .consultation-form {
+            padding-top: 2rem;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 1.5rem;
+            border: 1px dashed var(--clr-text-secondary);
+            text-align: center;
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+
+        .file-upload-label:hover {
+            background-color: var(--clr-surface);
+        }
+
+        input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <img src="img/logo.jpg" alt="RUVA" class="header-logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="about.html">About RUVA</a></li>
+                    <li><a href="process.html">Design Process</a></li>
+                    <li><a href="contact.html">Book Consultation</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Open Menu">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header relative">
+            <div class="container fade-up">
+                <h1 class="font-heading">Begin Your Design</h1>
+                <p class="text-overline"
+                    style="margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">Commissioning a
+                    piece of bespoke jewellery begins with a conversation. Share your intention, and we will contact you
+                    to schedule a consultation.</p>
+            </div>
+        </section>
+
+        <!-- Contact Form & Info -->
+        <section class="section pt-0">
+            <div class="container">
+                <div class="contact-layout fade-up">
+
+                    <!-- Form Side -->
+                    <div>
+                        <form class="consultation-form" action="#" method="POST" enctype="multipart/form-data">
+
+                            <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div class="form-group">
+                                    <label class="form-label" for="name">Full Name *</label>
+                                    <input type="text" id="name" name="name" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="phone">Phone / WhatsApp *</label>
+                                    <input type="tel" id="phone" name="phone" class="form-input" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+
+                            <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                <div class="form-group">
+                                    <label class="form-label" for="occasion">Occasion *</label>
+                                    <input type="text" id="occasion" name="occasion" class="form-input"
+                                        placeholder="e.g. Wedding, Anniversary" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="event_date">Event Date (if applicable)</label>
+                                    <input type="date" id="event_date" name="event_date" class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="piece">Preferred Piece *</label>
+                                <select id="piece" name="piece" class="form-select" required>
+                                    <option value="" disabled selected>Select an option</option>
+                                    <option value="ring">Bespoke Ring</option>
+                                    <option value="necklace">Necklace</option>
+                                    <option value="earrings">Earrings</option>
+                                    <option value="set">Full Bridal Set</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="message">Design Vision or Notes</label>
+                                <textarea id="message" name="message" class="form-textarea"
+                                    placeholder="Tell us about the outfit, neckline, or any specific ideas..."></textarea>
+                            </div>
+
+                            <div class="file-upload-wrapper">
+                                <div class="file-upload-label">
+                                    <span class="text-overline" style="font-size: 0.85rem;">Click
+                                        to upload an outfit image or inspiration (Optional)</span>
+                                </div>
+                                <input type="file" id="inspiration" name="inspiration" accept="image/*">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Schedule a
+                                Consultation</button>
+                        </form>
+                    </div>
+
+                    <!-- Info Side -->
+                    <div class="contact-info-panel">
+                        <div>
+                            <div class="info-group">
+                                <span class="info-label">Direct Contact</span>
+                                <a href="mailto:studio@ruvastudio.com" class="info-value"
+                                    style="font-size: 1.25rem;">studio@ruvastudio.com</a>
+                                <br>
+                                <a href="https://wa.me/something" class="whatsapp-btn" target="_blank">
+                                    <span>Chat on WhatsApp</span>
+                                </a>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-label">Studio Hours</span>
+                                <p style="margin: 0;">By Appointment Only<br>Monday — Friday<br>10:00 AM — 6:00 PM</p>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-label">Calendar Booking</span>
+                                <p style="font-size: 0.9rem; margin-bottom: 1rem;">Prefer to simply book directly on our
+                                    calendar?</p>
+                                <a href="#" class="btn" style="padding: 0.75rem 1.5rem; font-size: 0.75rem;">Open
+                                    Calendar [Placeholder]</a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="info-label" style="margin-bottom: 0;">Follow Our Studio Work</span>
+                            <ul class="social-links">
+                                <li><a href="#">Instagram</a></li>
+                                <li><a href="#">Pinterest</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer ... -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">RUVA</div>
+                <p style="font-size: 0.85rem; max-width: 300px;">Crafted for Her Moment. Bespoke bridal jewellery
+                    designed around attire, proportion, and presence.</p>
+            </div>
+
+            <div class="footer-links" style="grid-column: 2 / -1; display: flex; justify-content: space-between;">
+                <div>
+                    <h4 class="text-overline">Explore</h4>
+                    <ul>
+                        <li><a href="about.html">About RUVA</a></li>
+                        <li><a href="process.html">The Process</a></li>
+                        <li><a href="#">Bespoke</a></li>
+                        <li><a href="#">Collections</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-overline">Information</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Delivery & Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-overline">Contact</h4>
+                    <ul>
+                        <li><a href="contact.html">Book Appointment</a></li>
+                        <li><a href="mailto:studio@ruvastudio.com">studio@ruvastudio.com</a></li>
+                        <li><a href="#">+44 (0) 20 7123 4567</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>&copy;
+                <script>document.write(new Date().getFullYear())</script> RUVA Studio. All rights reserved.
+            </span>
+            <span>Design by Antigravity Studio</span>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

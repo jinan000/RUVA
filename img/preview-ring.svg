@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600">
+    <rect width="1200" height="1600" fill="#F5F4F0" />
+    <circle cx="600" cy="800" r="300" fill="none" stroke="#C8B598" stroke-width="8" stroke-opacity="0.6"/>
+    <circle cx="600" cy="800" r="280" fill="none" stroke="#C8B598" stroke-width="2" stroke-opacity="0.3"/>
+    <circle cx="600" cy="500" r="15" fill="#2D2B2A" />
+    <text x="600" y="1400" font-family="sans-serif" font-size="24" text-anchor="middle" fill="#5C5A58" letter-spacing="4" text-transform="uppercase">Visualisation 01</text>
+</svg>
