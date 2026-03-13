@@ -319,10 +319,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Configuration for text visibility [startFadeIn, fullyVisible, startFadeOut, fullyHidden]
         // Mapped to frame indexes
         const textTimings = [
-            [0, 10, 60, 80],       // Text 1: "Crafted for Her Moment"
-            [120, 140, 180, 200],  // Text 2: "Every detail begins with intention"
-            [220, 240, 300, 320],  // Text 3: "Each stone and setting..."
-            [380, 400, 440, 460]   // Text 4: "A design created only for her"
+            [0, 20, 80, 100],      // Text 1: "Crafted for Her Moment"
+            [120, 140, 200, 220],  // Text 2: "Every detail begins with intention"
+            [240, 260, 320, 340],  // Text 3: "Each stone and setting..."
+            [410, 440, 500, 520]   // Text 4: "RUVA"
         ];
 
         // 1. Preload Images
@@ -424,9 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // This prevents it from bleeding through semi-transparent footers/sections
             const fixedContainer = document.querySelector('.scrolly-fixed');
             if (fixedContainer) {
-                // Ensure smooth transition
-                fixedContainer.style.transition = 'opacity 0.5s ease-out';
-                if (progress >= 1) {
+                if (rect.bottom <= 0) {
                     fixedContainer.style.opacity = '0';
                     fixedContainer.style.pointerEvents = 'none';
                 } else {

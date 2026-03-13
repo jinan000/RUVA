@@ -24,7 +24,7 @@
     --font-body: 'Montserrat', sans-serif;
 
     /* Spacing & Layout */
-    --nav-height: 100px;
+    --nav-height: 160px;
     --section-pad: max(6rem, 8vh);
     --container-max-width: 1400px;
     --grid-gap: 2rem;
@@ -360,14 +360,19 @@ img {
 #scrolly-text-4 {
     top: auto;
     bottom: 5%;
-    /* Full downward */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    padding-bottom: 2vh;
+    /* Full downward, horizontally centered */
 }
 
 #scrolly-text-4 h2 {
-    font-size: clamp(5rem, 15vw, 12rem);
-    /* Large size for RUVA */
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    /* Slightly increased size for RUVA */
     font-weight: 400;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.25em;
+    /* Extra tracking for luxury feel */
     line-height: 1;
     margin: 0 auto;
 }
