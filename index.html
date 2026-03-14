@@ -22,8 +22,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=3">
-    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/components.css?v=4">
 
     <style>
         /* Home Page Specific Styles */
@@ -154,10 +154,14 @@
         }
 
         .craft-list li {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(45, 43, 42, 0.1);
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(198, 167, 94, 0.1);
             display: flex;
-            align-items: baseline;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-align: center;
         }
 
         .craft-list li:last-child {
@@ -166,8 +170,19 @@
 
         .craft-label {
             font-family: var(--font-heading);
-            font-size: 1.25rem;
-            min-width: 140px;
+            font-size: 1.5rem;
+            display: block;
+            color: var(--clr-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .craft-desc {
+            display: block;
+            overflow: hidden;
+            font-size: 1rem;
+            color: var(--clr-text-secondary);
+            letter-spacing: 0.05em;
         }
 
         /* Visual Preview */
@@ -278,7 +293,7 @@
     <header class="site-header">
         <div class="container nav-container">
             <a href="index.html" class="brand-logo">
-                <img src="img/logo.jpg" alt="RUVA" class="header-logo">
+                <img src="img/logo.png" alt="RUVA" class="header-logo">
             </a>
             <nav>
                 <ul class="nav-links">
@@ -312,22 +327,17 @@
                 <!-- Text Overlay Container -->
                 <div class="scrolly-text-container">
 
-                    <!-- Text 1: Frames 0-100 -->
+                    <!-- Text 1: Frames 0-60 -->
                     <div id="scrolly-text-1" class="scrolly-text text-center text-hero">
                         <h2 class="animated-gradient-text">Every detail begins with intention</h2>
                     </div>
 
-                    <!-- Text 2: Frames 120-220 -->
-                    <div id="scrolly-text-2" class="scrolly-text text-left">
+                    <!-- Text 2: Frames 60-160 -->
+                    <div id="scrolly-text-2" class="scrolly-text text-center text-hero">
                         <h2 class="animated-gradient-text">Crafted for Her Moment</h2>
                     </div>
 
-                    <!-- Text 3: Frames 240-340 -->
-                    <div id="scrolly-text-3" class="scrolly-text text-right">
-                        <h2 class="animated-gradient-text">Each stone and setting designed in harmony</h2>
-                    </div>
 
-                    <!-- Text 4: Frames 380-480 -->
                     <div id="scrolly-text-4" class="scrolly-text text-center text-cta">
                         <h2 class="animated-gradient-text">RUVA</h2>
                     </div>
@@ -363,22 +373,22 @@
                         <div class="process-step card-spotlight" style="--spotlight-color: rgba(0, 229, 255, 0.2);">
                             <span class="step-number">01</span>
                             <h3 class="step-title">Discovery</h3>
-                            <p>Understanding outfit, personality, and timeline.</p>
+                            <p>Understanding outfit, personality, occasion and timeline.</p>
                         </div>
                         <div class="process-step card-spotlight" style="--spotlight-color: rgba(0, 229, 255, 0.2);">
                             <span class="step-number">02</span>
                             <h3 class="step-title">Design</h3>
-                            <p>Sketches, concepts, and refined revisions.</p>
+                            <p>Sketches, concepts, and thoughtful refinement.</p>
                         </div>
                         <div class="process-step card-spotlight" style="--spotlight-color: rgba(0, 229, 255, 0.2);">
                             <span class="step-number">03</span>
                             <h3 class="step-title">Craft</h3>
-                            <p>Material sourcing and meticulous goldsmith work.</p>
+                            <p>Material selection. Handcrafted by master goldsmiths.</p>
                         </div>
                         <div class="process-step card-spotlight" style="--spotlight-color: rgba(0, 229, 255, 0.2);">
                             <span class="step-number">04</span>
                             <h3 class="step-title">Reveal</h3>
-                            <p>Fitting, finishing, and final delivery.</p>
+                            <p>Final fitting, Signature finishing, and presentation.</p>
                         </div>
                     </div>
 
@@ -392,7 +402,7 @@
             <section class="section idea-section">
                 <div class="container">
                     <div class="craft-grid">
-                        <div class="fade-up" style="text-align: left;">
+                        <div class="fade-up" style="text-align: center;">
                             <h2 style="margin-bottom: 1.5rem;">Uncompromising Standards</h2>
                             <p>We believe that luxury lies in intention. Every piece is commissioned to ensure
                                 precision,
@@ -400,23 +410,31 @@
                             <p style="margin-top: 1rem;">Only pieces that feel complete when worn.</p>
                         </div>
 
-                        <div class="fade-up">
+                        <div class="fade-up" style="text-align: center;">
                             <ul class="craft-list">
                                 <li>
                                     <span class="craft-label">Materials</span>
-                                    <span>Exceptional gold and diamond quality</span>
+                                    <span class="craft-desc scroll-float">
+                                        <span class="scroll-float-text">Certified metals, Curated gemstones, Design</span>
+                                    </span>
                                 </li>
                                 <li>
                                     <span class="craft-label">Design</span>
-                                    <span>Meticulous attention to proportion</span>
+                                    <span class="craft-desc scroll-float">
+                                        <span class="scroll-float-text">Perfected proportion, Intentional detail, Wearability</span>
+                                    </span>
                                 </li>
                                 <li>
                                     <span class="craft-label">Wearability</span>
-                                    <span>Engineered for lifelong comfort</span>
+                                    <span class="craft-desc scroll-float">
+                                        <span class="scroll-float-text">Engineered for effortless lifelong comfort, Sourcing</span>
+                                    </span>
                                 </li>
                                 <li>
                                     <span class="craft-label">Sourcing</span>
-                                    <span>Absolute integrity in origins</span>
+                                    <span class="craft-desc scroll-float">
+                                        <span class="scroll-float-text">Traceable origins, Absolute transparency</span>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -433,7 +451,7 @@
                     </h2>
                     <p style="margin: 0 auto 4rem auto; max-width: 800px;">
                         Browse through our collection of stunning jewellery pieces crafted with precision and artistry.
-                        Whether you prefer classic elegance or modern sophistication, we also offer customization to
+                        Whether you prefer classic elegance or modern sophistication, we offer customization to
                         help
                         you create jewellery that is uniquely personal and meaningful.
                     </p>
@@ -498,7 +516,9 @@
     <footer class="site-footer">
         <div class="footer-grid">
             <div>
-                <div class="footer-brand">RUVA</div>
+                <a href="index.html" class="footer-brand">
+                    <img src="img/logo.png" alt="RUVA" class="footer-logo">
+                </a>
                 <p style="font-size: 0.85rem; max-width: 300px;">Crafted for Her Moment. Bespoke bridal jewellery
                     designed around attire, proportion, and presence.</p>
             </div>
@@ -550,7 +570,8 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="js/main.js?v=2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/main.js?v=5"></script>
 </body>
 
 </html>

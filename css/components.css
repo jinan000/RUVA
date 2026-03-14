@@ -39,7 +39,7 @@
 }
 
 .header-logo {
-    height: 100px;
+    height: 70px;
     width: auto;
     object-fit: contain;
     transition: transform var(--transition-fast);
@@ -299,6 +299,14 @@
     font-family: var(--font-heading);
     font-size: 1.5rem;
     letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.footer-logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
     margin-bottom: 1rem;
 }
 
@@ -395,4 +403,20 @@
     text-align: center;
     pointer-events: none;
     /* Let the figure handle hover */
+}
+
+/* ==========================================================================
+   ScrollFloat Animation Component
+   ========================================================================== */
+.scroll-float {
+    overflow: hidden;
+}
+
+.scroll-float-text {
+    display: inline-flex;
+    flex-wrap: wrap; /* handles multi-line wrapping */
+}
+
+.char {
+    display: inline-block;
 }

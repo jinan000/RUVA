@@ -24,7 +24,7 @@
     --font-body: 'Montserrat', sans-serif;
 
     /* Spacing & Layout */
-    --nav-height: 160px;
+    --nav-height: 100px;
     --section-pad: max(6rem, 8vh);
     --container-max-width: 1400px;
     --grid-gap: 2rem;
@@ -250,8 +250,8 @@ img {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    /* Let mouse events pass through to canvas if needed */
-    z-index: 10;
+    /* Above header (z-index 1000) so RUVA can overlap it */
+    z-index: 1100;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -334,15 +334,34 @@ img {
 }
 
 #scrolly-text-2 {
-    top: 50%;
-    transform: translateY(-50%);
+    top: auto;
+    bottom: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
     max-width: 100%;
+    text-align: center;
 }
 
 #scrolly-text-2 h2 {
-    max-width: 350px;
-    margin: 0;
-    /* Ensures it stays most left */
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    margin: 0 auto;
+    max-width: 700px;
+    /* Warm soft gold gradient for premium feel */
+    background-image: linear-gradient(120deg, #C9A76B 0%, #E8D9B0 45%, #C9A76B 100%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shiny-text-pan 5s linear infinite;
+    /* Slower, more elegant reveal */
+    filter: drop-shadow(0 2px 16px rgba(201, 167, 107, 0.35));
+    text-transform: none;
 }
 
 #scrolly-text-3 {
@@ -358,21 +377,20 @@ img {
 }
 
 #scrolly-text-4 {
-    top: auto;
-    bottom: 5%;
+    top: 0;
+    bottom: auto;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    padding-bottom: 2vh;
-    /* Full downward, horizontally centered */
+    padding-top: 4vh;
+    /* Sits at the absolute top, overlapping the header */
 }
 
 #scrolly-text-4 h2 {
-    font-size: clamp(3.5rem, 10vw, 8rem);
-    /* Slightly increased size for RUVA */
+    font-size: clamp(4rem, 11vw, 9rem);
+    /* Large commanding RUVA title */
     font-weight: 400;
-    letter-spacing: 0.25em;
-    /* Extra tracking for luxury feel */
+    letter-spacing: 0.3em;
     line-height: 1;
     margin: 0 auto;
 }

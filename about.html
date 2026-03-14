@@ -7,8 +7,8 @@
     <title>About RUVA | The Brand Story</title>
     <meta name="description"
         content="Discover the story behind RUVA. We believe jewellery should be created to suit the bride — not the bride to suit the jewellery.">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/components.css?v=4">
     <style>
         .page-header {
             padding-top: calc(var(--nav-height) + 4rem);
@@ -43,9 +43,15 @@
 
         .values-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 3rem;
             margin-top: 3rem;
+        }
+
+        @media (max-width: 480px) {
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .value-card {
@@ -129,7 +135,7 @@
     <header class="site-header">
         <div class="container nav-container">
             <a href="index.html" class="brand-logo">
-                <img src="img/logo.jpg" alt="RUVA" class="header-logo">
+                <img src="img/logo.png" alt="RUVA" class="header-logo">
             </a>
             <nav>
                 <ul class="nav-links">
@@ -189,8 +195,7 @@
                         worn.</p>
                     <p>RUVA is for brides who value intention — who want jewellery that feels personal, considered, and
                         lasting.</p>
-                    <div class="font-heading"
-                        style="font-style: italic; font-size: 1.5rem; margin-top: 3rem; text-align: center; color: var(--clr-text-primary);">
+                    <div class="highlight-quote">
                         Because bridal jewellery is not just worn for a day.<br>It becomes part of a family story.
                     </div>
                 </div>
@@ -327,7 +332,9 @@
     <footer class="site-footer">
         <div class="footer-grid">
             <div>
-                <div class="footer-brand">RUVA</div>
+                <a href="index.html" class="footer-brand">
+                    <img src="img/logo.png" alt="RUVA" class="footer-logo">
+                </a>
                 <p style="font-size: 0.85rem; max-width: 300px;">Crafted for Her Moment. Bespoke bridal jewellery
                     designed around attire, proportion, and presence.</p>
             </div>

@@ -7,8 +7,8 @@
     <title>Design Process | RUVA Bespoke Studio</title>
     <meta name="description"
         content="Explore the RUVA bespoke jewellery design process. From discovery to final reveal, we craft diamond and gold jewellery around you.">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/components.css?v=4">
     <style>
         .page-header {
             padding-top: calc(var(--nav-height) + 4rem);
@@ -66,8 +66,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background-color: var(--clr-bg);
             border: 1px solid var(--clr-accent);
             border-radius: 50%;
@@ -75,10 +75,13 @@
             align-items: center;
             justify-content: center;
             font-family: var(--font-heading);
-            font-weight: 500;
-            font-size: 1.25rem;
+            font-weight: 600;
+            font-size: 1.2rem;
             color: var(--clr-accent);
             z-index: 3;
+            box-shadow: 0 0 15px rgba(198, 167, 94, 0.1);
+            /* Ensure the number sits perfectly in the middle visually */
+            padding-bottom: 2px; 
         }
 
         .timeline-content h3 {
@@ -171,7 +174,7 @@
     <header class="site-header">
         <div class="container nav-container">
             <a href="index.html" class="brand-logo">
-                <img src="img/logo.jpg" alt="RUVA" class="header-logo">
+                <img src="img/logo.png" alt="RUVA" class="header-logo">
             </a>
             <nav>
                 <ul class="nav-links">
@@ -298,7 +301,9 @@
     <footer class="site-footer">
         <div class="footer-grid">
             <div>
-                <div class="footer-brand">RUVA</div>
+                <a href="index.html" class="footer-brand">
+                    <img src="img/logo.png" alt="RUVA" class="footer-logo">
+                </a>
                 <p style="font-size: 0.85rem; max-width: 300px;">Crafted for Her Moment. Bespoke bridal jewellery
                     designed around attire, proportion, and presence.</p>
             </div>
