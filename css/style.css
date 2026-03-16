@@ -51,6 +51,26 @@ body {
     overflow-x: hidden;
 }
 
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
 body {
     background-color: var(--clr-bg);
     /* Dark luxury cinematic gradient overlay */
@@ -382,8 +402,8 @@ img {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    padding-top: 4vh;
-    /* Sits at the absolute top, overlapping the header */
+    padding-top: 15vh;
+    /* Sits near the top, moved down slightly from absolute top */
 }
 
 #scrolly-text-4 h2 {
@@ -393,6 +413,7 @@ img {
     letter-spacing: 0.3em;
     line-height: 1;
     margin: 0 auto;
+    padding-left: 0.3em;
 }
 
 /* ========================================= */

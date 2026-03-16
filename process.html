@@ -81,7 +81,7 @@
             z-index: 3;
             box-shadow: 0 0 15px rgba(198, 167, 94, 0.1);
             /* Ensure the number sits perfectly in the middle visually */
-            padding-bottom: 2px; 
+            padding-bottom: 2px;
         }
 
         .timeline-content h3 {
@@ -120,15 +120,17 @@
         }
 
         .expectations-bar {
-            background-color: var(--clr-text-primary);
-            color: var(--clr-bg);
+            background-color: var(--clr-surface);
+            color: var(--clr-text-primary);
             text-align: center;
             padding: 3rem 5%;
             margin: 6rem 0;
+            border-top: 1px solid rgba(198, 167, 94, 0.15);
+            border-bottom: 1px solid rgba(198, 167, 94, 0.15);
         }
 
         .expectations-bar p {
-            color: var(--clr-bg);
+            color: var(--clr-accent);
             margin: 0;
             font-size: 1.125rem;
             font-family: var(--font-heading);
@@ -257,7 +259,7 @@
         </section>
 
         <div class="expectations-bar fade-up">
-            <p>Typical Timeline Expectation: 4 to 8 Weeks</p>
+            <p>Typical Timeline Expectation: 3 to 6 Weeks</p>
         </div>
 
         <!-- FAQ -->
@@ -314,16 +316,12 @@
                     <ul>
                         <li><a href="about.html">About RUVA</a></li>
                         <li><a href="process.html">The Process</a></li>
-                        <li><a href="#">Bespoke</a></li>
-                        <li><a href="#">Collections</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-overline">Information</h4>
                     <ul>
                         <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                        <li><a href="#">Delivery & Returns</a></li>
                     </ul>
                 </div>
                 <div>
@@ -331,7 +329,6 @@
                     <ul>
                         <li><a href="contact.html">Book Appointment</a></li>
                         <li><a href="mailto:studio@ruvastudio.com">studio@ruvastudio.com</a></li>
-                        <li><a href="#">+44 (0) 20 7123 4567</a></li>
                     </ul>
                 </div>
             </div>
@@ -344,6 +341,23 @@
             <span>Design by Antigravity Studio</span>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+    <script>
+        const lenis = new Lenis({
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+            smooth: true,
+        });
+        
+        lenis.on('scroll', ScrollTrigger.update);
+        
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+    </script>
     <script src="js/main.js"></script>
 </body>
 

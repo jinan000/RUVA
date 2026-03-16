@@ -256,16 +256,12 @@
                                 <span class="info-label">Calendar Booking</span>
                                 <p style="font-size: 0.9rem; margin-bottom: 1rem;">Prefer to simply book directly on our
                                     calendar?</p>
-                                <a href="#" class="btn" style="padding: 0.75rem 1.5rem; font-size: 0.75rem;">Open
-                                    Calendar [Placeholder]</a>
                             </div>
                         </div>
 
                         <div>
                             <span class="info-label" style="margin-bottom: 0;">Follow Our Studio Work</span>
                             <ul class="social-links">
-                                <li><a href="#">Instagram</a></li>
-                                <li><a href="#">Pinterest</a></li>
                             </ul>
                         </div>
                     </div>
@@ -292,16 +288,12 @@
                     <ul>
                         <li><a href="about.html">About RUVA</a></li>
                         <li><a href="process.html">The Process</a></li>
-                        <li><a href="#">Bespoke</a></li>
-                        <li><a href="#">Collections</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-overline">Information</h4>
                     <ul>
                         <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                        <li><a href="#">Delivery & Returns</a></li>
                     </ul>
                 </div>
                 <div>
@@ -309,7 +301,6 @@
                     <ul>
                         <li><a href="contact.html">Book Appointment</a></li>
                         <li><a href="mailto:studio@ruvastudio.com">studio@ruvastudio.com</a></li>
-                        <li><a href="#">+44 (0) 20 7123 4567</a></li>
                     </ul>
                 </div>
             </div>
@@ -322,6 +313,23 @@
             <span>Design by Antigravity Studio</span>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+    <script>
+        const lenis = new Lenis({
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+            smooth: true,
+        });
+        
+        lenis.on('scroll', ScrollTrigger.update);
+        
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+    </script>
     <script src="js/main.js"></script>
 </body>
 
