@@ -8,7 +8,7 @@
     <meta name="description"
         content="Begin your design journey with RUVA. Schedule a consultation for your bespoke bridal jewellery.">
     <link rel="stylesheet" href="css/style.css?v=4">
-    <link rel="stylesheet" href="css/components.css?v=4">
+    <link rel="stylesheet" href="css/components.css?v=7">
     <style>
         .page-header {
             padding-top: calc(var(--nav-height) + 4rem);
@@ -145,11 +145,38 @@
                     <li><a href="process.html">Design Process</a></li>
                     <li><a href="contact.html">Book Consultation</a></li>
                 </ul>
-                <button class="mobile-menu-btn" aria-label="Open Menu">
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                </button>
+                <div class="bubble-menu toggle-bubble-container mobile-menu-btn"
+                    style="padding: 0; width: auto; pointer-events: auto;">
+                    <button type="button" class="bubble toggle-bubble menu-btn" aria-label="Toggle menu">
+                        <span class="menu-line"></span>
+                        <span class="menu-line short"></span>
+                    </button>
+                    <!-- Overlay Bubble Menu Items -->
+                    <div class="bubble-menu-items">
+                        <ul class="pill-list" role="menu">
+                            <li role="none" class="pill-col">
+                                <a role="menuitem" href="index.html" class="pill-link" style="--item-rot: -8deg;">
+                                    <span class="pill-label">Home</span>
+                                </a>
+                            </li>
+                            <li role="none" class="pill-col">
+                                <a role="menuitem" href="about.html" class="pill-link" style="--item-rot: 8deg;">
+                                    <span class="pill-label">About</span>
+                                </a>
+                            </li>
+                            <li role="none" class="pill-col">
+                                <a role="menuitem" href="process.html" class="pill-link" style="--item-rot: -5deg;">
+                                    <span class="pill-label">Process</span>
+                                </a>
+                            </li>
+                            <li role="none" class="pill-col">
+                                <a role="menuitem" href="contact.html" class="pill-link" style="--item-rot: 8deg;">
+                                    <span class="pill-label">Contact</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
@@ -239,17 +266,18 @@
                         <div>
                             <div class="info-group">
                                 <span class="info-label">Direct Contact</span>
+                                <a href="tel:+917994242932" class="info-value" style="font-size: 1.25rem; display: block; margin-bottom: 0.5rem;">+91 79942 42932</a>
                                 <a href="mailto:studio@ruvastudio.com" class="info-value"
-                                    style="font-size: 1.25rem;">studio@ruvastudio.com</a>
+                                    style="font-size: 1.1rem;">studio@ruvastudio.com</a>
                                 <br>
-                                <a href="https://wa.me/something" class="whatsapp-btn" target="_blank">
+                                <a href="https://wa.me/917994242932" class="whatsapp-btn" target="_blank">
                                     <span>Chat on WhatsApp</span>
                                 </a>
                             </div>
 
                             <div class="info-group">
                                 <span class="info-label">Studio Hours</span>
-                                <p style="margin: 0;">By Appointment Only<br>Monday — Friday<br>10:00 AM — 6:00 PM</p>
+                                <p style="margin: 0;">By Appointment Only<br>Monday — Saturday<br>10:00 AM — 6:00 PM</p>
                             </div>
 
                             <div class="info-group">
@@ -319,18 +347,18 @@
     <script>
         const lenis = new Lenis({
             duration: 1.5,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
         });
-        
+
         lenis.on('scroll', ScrollTrigger.update);
-        
+
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0);
     </script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=9"></script>
 </body>
 
 </html>

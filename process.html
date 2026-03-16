@@ -8,7 +8,7 @@
     <meta name="description"
         content="Explore the RUVA bespoke jewellery design process. From discovery to final reveal, we craft diamond and gold jewellery around you.">
     <link rel="stylesheet" href="css/style.css?v=4">
-    <link rel="stylesheet" href="css/components.css?v=4">
+    <link rel="stylesheet" href="css/components.css?v=7">
     <style>
         .page-header {
             padding-top: calc(var(--nav-height) + 4rem);
@@ -184,11 +184,38 @@
                     <li><a href="process.html">Design Process</a></li>
                     <li><a href="contact.html">Book Consultation</a></li>
                 </ul>
-                <button class="mobile-menu-btn" aria-label="Open Menu">
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                </button>
+                <div class="bubble-menu toggle-bubble-container mobile-menu-btn"
+                    style="padding: 0; width: auto; pointer-events: auto;">
+                    <button type="button" class="bubble toggle-bubble menu-btn" aria-label="Toggle menu">
+                        <span class="menu-line"></span>
+                        <span class="menu-line short"></span>
+                    </button>
+                    <!-- Overlay Bubble Menu Items -->
+                    <div class="bubble-menu-items">
+                        <ul class="pill-list" role="menu">
+                            <li role="none" class="pill-col">
+                                <a role="menuitem" href="index.html" class="pill-link" style="--item-rot: -8deg;">
+                                    <span class="pill-label">Home</span>
+                                </a>
+                            </li>
+                            <li role="none" class="pill-col">
+                                <a role="menuitem" href="about.html" class="pill-link" style="--item-rot: 8deg;">
+                                    <span class="pill-label">About</span>
+                                </a>
+                            </li>
+                            <li role="none" class="pill-col">
+                                <a role="menuitem" href="process.html" class="pill-link" style="--item-rot: -5deg;">
+                                    <span class="pill-label">Process</span>
+                                </a>
+                            </li>
+                            <li role="none" class="pill-col">
+                                <a role="menuitem" href="contact.html" class="pill-link" style="--item-rot: 8deg;">
+                                    <span class="pill-label">Contact</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
@@ -268,7 +295,7 @@
 
             <div class="faq-item">
                 <div class="faq-question">How long does custom bridal jewellery take?</div>
-                <div class="faq-answer">On average, a bespoke piece requires between 4 to 8 weeks from the initial
+                <div class="faq-answer">On average, a bespoke piece requires between 3 to 6 weeks from the initial
                     discovery consultation to the final delivery. This allows us the necessary time to refine designs
                     and execute the craftsmanship to our stringent standards.</div>
             </div>
@@ -347,18 +374,18 @@
     <script>
         const lenis = new Lenis({
             duration: 1.5,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
         });
-        
+
         lenis.on('scroll', ScrollTrigger.update);
-        
+
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0);
     </script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=9"></script>
 </body>
 
 </html>

@@ -1,9 +1,96 @@
 // main.js - RUVA Global JavaScript
 
+// --- Bubble Menu Logic --- (runs on window load so GSAP is always ready)
+const initBubbleMenu = () => {
+    const toggleBtn = document.querySelector('.toggle-bubble');
+    const overlay = document.querySelector('.bubble-menu-items');
+    if (!toggleBtn || !overlay) return;
+    if (typeof gsap === 'undefined') {
+        // GSAP not loaded, retry after a moment
+        setTimeout(initBubbleMenu, 100);
+        return;
+    }
+
+    const bubbles = Array.from(overlay.querySelectorAll('.pill-link'));
+    const labels = Array.from(overlay.querySelectorAll('.pill-label'));
+
+    let isMenuOpen = false;
+    const animationEase = 'back.out(1.5)';
+    const animationDuration = 0.5;
+    const staggerDelay = 0.12;
+
+    toggleBtn.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+
+        if (isMenuOpen) {
+            toggleBtn.classList.add('open');
+            overlay.style.display = 'flex';
+
+            gsap.killTweensOf([...bubbles, ...labels]);
+            gsap.set(bubbles, { scale: 0, transformOrigin: '50% 50%' });
+            gsap.set(labels, { y: 24, autoAlpha: 0 });
+
+            bubbles.forEach((bubble, i) => {
+                const delay = i * staggerDelay + gsap.utils.random(-0.05, 0.05);
+                const tl = gsap.timeline({ delay });
+
+                tl.to(bubble, {
+                    scale: 1,
+                    duration: animationDuration,
+                    ease: animationEase
+                });
+
+                if (labels[i]) {
+                    tl.to(labels[i], {
+                        y: 0,
+                        autoAlpha: 1,
+                        duration: animationDuration,
+                        ease: 'power3.out'
+                    }, `-=${animationDuration * 0.9}`);
+                }
+            });
+        } else {
+            toggleBtn.classList.remove('open');
+
+            gsap.killTweensOf([...bubbles, ...labels]);
+            gsap.to(labels, {
+                y: 24,
+                autoAlpha: 0,
+                duration: 0.2,
+                ease: 'power3.in'
+            });
+
+            gsap.to(bubbles, {
+                scale: 0,
+                duration: 0.2,
+                ease: 'power3.in',
+                onComplete: () => {
+                    overlay.style.display = 'none';
+                }
+            });
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (isMenuOpen) {
+            const isDesktop = window.innerWidth >= 900;
+            bubbles.forEach((bubble) => {
+                const rotStr = bubble.style.getPropertyValue('--item-rot');
+                let rotation = 0;
+                if (isDesktop && rotStr) rotation = parseFloat(rotStr);
+                gsap.set(bubble, { rotation, scale: 1 });
+            });
+        }
+    });
+};
+
+window.addEventListener('load', initBubbleMenu);
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Header Scroll Effect
     const header = document.querySelector('.site-header');
+
 
     const handleScroll = () => {
         const scrollySection = document.getElementById('scrolly-section');
@@ -319,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mapped to frame indexes
         const textTimings = [
             [0, 15, 45, 60],       // Text 1: "Every detail begins with intention"
-            [60, 80, 140, 160],    // Text 2: "Crafted for Her Moment"
+            [100, 120, 180, 200],  // Text 2: "Crafted for Her Moment"
             [310, 330, 410, 430]   // Text 4: "RUVA"
         ];
 
