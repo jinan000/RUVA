@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
             images.push(img);
         }
 
-        // 2. Responsive Canvas Scaling (Contain algorithm)
+        // 2. Responsive Canvas Scaling — cover fill at native resolution
         const renderFrame = (frameIndex) => {
             const img = images[frameIndex];
             if (!img || !img.complete) return;
@@ -441,10 +441,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Calculate "cover" ratios to fill the screen
+            // 'cover' — always fill the viewport edge-to-edge
             const hRatio = canvas.width / img.width;
             const vRatio = canvas.height / img.height;
-            const ratio = Math.max(hRatio, vRatio); // Changed to Math.max for 'cover' filling
+            const ratio = Math.max(hRatio, vRatio);
 
             const centerShift_x = (canvas.width - img.width * ratio) / 2;
             const centerShift_y = (canvas.height - img.height * ratio) / 2;
@@ -457,9 +457,16 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const handleResize = () => {
-            // Match canvas drawing buffer to screen logical pixels
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            // Scale canvas drawing buffer by devicePixelRatio so frames render at
+            // the screen's actual physical pixel resolution (e.g. 3× on Retina).
+            // Without this, a 390px-wide canvas on a 3× DPR phone only uses 390
+            // real pixels instead of 1170, making everything look blurry/unclear.
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width  = Math.round(window.innerWidth  * dpr);
+            canvas.height = Math.round(window.innerHeight * dpr);
+            // The CSS display size stays at the logical viewport dimensions
+            canvas.style.width  = window.innerWidth  + 'px';
+            canvas.style.height = window.innerHeight + 'px';
 
             // Re-render current frame based on scroll
             updateScrollProgress();
