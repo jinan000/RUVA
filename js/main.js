@@ -150,13 +150,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const bounceContainer = document.getElementById('bounceCards');
     if (bounceContainer && typeof gsap !== 'undefined') {
         const cards = Array.from(bounceContainer.querySelectorAll('.card'));
-        const transformStyles = [
-            "rotate(5deg) translate(-150px)",
-            "rotate(0deg) translate(-70px)",
-            "rotate(-5deg)",
-            "rotate(5deg) translate(70px)",
-            "rotate(-5deg) translate(150px)"
-        ];
+
+        // Use smaller offsets on mobile so cards don't overflow the viewport
+        const isMobile = () => window.innerWidth <= 600;
+
+        const getTransformStyles = () => isMobile()
+            ? [
+                "rotate(5deg) translate(-88px)",
+                "rotate(0deg) translate(-42px)",
+                "rotate(-5deg)",
+                "rotate(5deg) translate(42px)",
+                "rotate(-5deg) translate(88px)"
+              ]
+            : [
+                "rotate(5deg) translate(-150px)",
+                "rotate(0deg) translate(-70px)",
+                "rotate(-5deg)",
+                "rotate(5deg) translate(70px)",
+                "rotate(-5deg) translate(150px)"
+              ];
 
         // Initial Appearance Animation
         gsap.fromTo(
@@ -195,6 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Hover Interaction Logic
         const pushSiblings = hoveredIdx => {
+            const transformStyles = getTransformStyles();
+            const pushOffset = isMobile() ? 96 : 160;
             cards.forEach((card, i) => {
                 gsap.killTweensOf(card);
                 const baseTransform = transformStyles[i] || 'none';
@@ -209,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         zIndex: 10 // Bring to front
                     });
                 } else {
-                    const offsetX = i < hoveredIdx ? -160 : 160;
+                    const offsetX = i < hoveredIdx ? -pushOffset : pushOffset;
                     const pushedTransform = getPushedTransform(baseTransform, offsetX);
                     const distance = Math.abs(hoveredIdx - i);
                     const delay = distance * 0.05;
@@ -227,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const resetSiblings = () => {
+            const transformStyles = getTransformStyles();
             cards.forEach((card, i) => {
                 gsap.killTweensOf(card);
                 const baseTransform = transformStyles[i] || 'none';
@@ -433,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
             images.push(img);
         }
 
-        // 2. Responsive Canvas Scaling — cover fill at native resolution
+        // 2. Responsive Canvas Scaling
         const renderFrame = (frameIndex) => {
             const img = images[frameIndex];
             if (!img || !img.complete) return;
@@ -441,10 +456,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // 'cover' — always fill the viewport edge-to-edge
             const hRatio = canvas.width / img.width;
             const vRatio = canvas.height / img.height;
-            const ratio = Math.max(hRatio, vRatio);
+
+            // On portrait / mobile screens the image aspect ratio is much wider than
+            // the viewport is tall, so 'cover' (Math.max) over-zooms and destroys
+            // clarity. Switch to 'contain' (Math.min) on portrait orientations so
+            // the full frame is visible. On landscape / desktop keep 'cover' so the
+            // animation fills the screen edge-to-edge.
+            const isPortrait = canvas.height > canvas.width;
+            const ratio = isPortrait ? Math.min(hRatio, vRatio) : Math.max(hRatio, vRatio);
 
             const centerShift_x = (canvas.width - img.width * ratio) / 2;
             const centerShift_y = (canvas.height - img.height * ratio) / 2;
@@ -457,16 +478,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const handleResize = () => {
-            // Scale canvas drawing buffer by devicePixelRatio so frames render at
-            // the screen's actual physical pixel resolution (e.g. 3× on Retina).
-            // Without this, a 390px-wide canvas on a 3× DPR phone only uses 390
-            // real pixels instead of 1170, making everything look blurry/unclear.
-            const dpr = window.devicePixelRatio || 1;
-            canvas.width  = Math.round(window.innerWidth  * dpr);
-            canvas.height = Math.round(window.innerHeight * dpr);
-            // The CSS display size stays at the logical viewport dimensions
-            canvas.style.width  = window.innerWidth  + 'px';
-            canvas.style.height = window.innerHeight + 'px';
+            // Match canvas drawing buffer to screen logical pixels
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
             // Re-render current frame based on scroll
             updateScrollProgress();

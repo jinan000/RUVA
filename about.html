@@ -67,6 +67,52 @@
             /* Fixed height for the tilt effect */
         }
 
+        /* 2-column mobile (480–600px): cards are narrower, keep compact */
+        @media (max-width: 600px) {
+            .value-card {
+                height: 220px;
+            }
+
+            .tilted-card-figure .tilted-card-overlay {
+                padding: 1rem !important;
+            }
+
+            .tilted-card-overlay h3 {
+                font-size: 0.82rem !important;
+                letter-spacing: 0.06em !important;
+                margin-bottom: 0.35rem !important;
+            }
+
+            .tilted-card-overlay p {
+                font-size: 0.72rem !important;
+                line-height: 1.5;
+                max-width: 100%;
+            }
+        }
+
+        /* 1-column mobile (≤480px): cards are full-width, use larger readable fonts */
+        @media (max-width: 480px) {
+            .value-card {
+                height: 260px;
+            }
+
+            .tilted-card-figure .tilted-card-overlay {
+                padding: 1.4rem !important;
+            }
+
+            .tilted-card-overlay h3 {
+                font-size: 1rem !important;
+                letter-spacing: 0.08em !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            .tilted-card-overlay p {
+                font-size: 0.9rem !important;
+                line-height: 1.6;
+                max-width: 100%;
+            }
+        }
+
         .form-framework-section {
             background-color: var(--clr-surface);
             color: var(--clr-text-primary);
