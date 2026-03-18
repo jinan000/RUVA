@@ -572,11 +572,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isLooping) return;
             isLooping = true;
 
-            const loop = () => {
-                updateScrollProgress();
+            // Drive from gsap.ticker so this runs AFTER Lenis applies its eased
+            // scroll position each frame — eliminating jitter from the old rAF loop.
+            if (typeof gsap !== 'undefined') {
+                gsap.ticker.add(updateScrollProgress);
+            } else {
+                const loop = () => { updateScrollProgress(); requestAnimationFrame(loop); };
                 requestAnimationFrame(loop);
-            };
-            requestAnimationFrame(loop);
+            }
         };
     };
 

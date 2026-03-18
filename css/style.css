@@ -213,12 +213,13 @@ img {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* These dimensions will be set by JS based on window resize, but we provide a fallback */
-    width: 100vw;
-    height: 100vh;
-    /* Ensure crisp rendering */
+    /* JS always sets width/height via canvas.style — no CSS fallback needed */
+    /* High-quality interpolation for photographic frames */
     image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    image-rendering: high-quality;
+    image-rendering: optimizeQuality;
+    /* Dark background fills the letterbox bars on portrait mobile */
+    background-color: var(--clr-background-dark);
     z-index: 1;
 }
 
