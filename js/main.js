@@ -478,9 +478,20 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const handleResize = () => {
-            // Match canvas drawing buffer to screen logical pixels
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            // Scale the drawing buffer to the physical pixel count of the screen.
+            // Without this, high-DPR mobile displays (2x / 3x) upscale a low-res
+            // canvas buffer causing blurry / unclear frames.
+            const dpr = window.devicePixelRatio || 1;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+
+            canvas.width  = Math.round(w * dpr);
+            canvas.height = Math.round(h * dpr);
+
+            // Pin the CSS display size to logical pixels so the element
+            // doesn't grow to fill the now-larger drawing buffer.
+            canvas.style.width  = w + 'px';
+            canvas.style.height = h + 'px';
 
             // Re-render current frame based on scroll
             updateScrollProgress();

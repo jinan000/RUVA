@@ -33,6 +33,31 @@
             }
         }
 
+        /* Mobile: add horizontal breathing room and fix cramped 2-col form grids */
+        @media (max-width: 600px) {
+            .contact-layout {
+                padding-left: 1rem;
+                padding-right: 1rem;
+                padding-bottom: 4rem;
+                gap: 2.5rem;
+            }
+
+            /* Stack the two-column form rows on narrow screens */
+            .consultation-form .grid {
+                grid-template-columns: 1fr !important;
+                gap: 0 !important;
+            }
+
+            /* Tighten info panel padding */
+            .contact-info-panel {
+                padding: 1.75rem;
+            }
+
+            .consultation-form {
+                padding-top: 1rem;
+            }
+        }
+
         /* Contact Details Panel */
         .contact-info-panel {
             background-color: var(--clr-background-dark);
