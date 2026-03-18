@@ -91,24 +91,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Header Scroll Effect
     const header = document.querySelector('.site-header');
 
+    let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
+        const currentScrollY = window.scrollY;
         const scrollySection = document.getElementById('scrolly-section');
         let shouldBeSolid = false;
 
         if (scrollySection) {
-            // Keep transparent until we scroll PAST the entire 400vh section
-            // The section ends when its bottom edge hits the top of the viewport (or slightly before)
-            // Let's make it solid when progress > 0.95 or when rect.bottom < window.innerHeight
             const rect = scrollySection.getBoundingClientRect();
-            // If the bottom of the scrolly section is at or above the top of the viewport
-            // (meaning we have scrolled past it)
             if (rect.bottom <= window.innerHeight) {
                 shouldBeSolid = true;
             }
         } else {
-            // Fallback for pages without scrolly-section
-            if (window.scrollY > 50) {
+            if (currentScrollY > 50) {
                 shouldBeSolid = true;
             }
         }
@@ -118,6 +114,28 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             header.classList.remove('scrolled');
         }
+
+        // --- Mobile: hide header on scroll-down, show on scroll-up ---
+        if (window.innerWidth <= 768) {
+            // Only trigger after scrolling past 80px to ignore tiny bounces
+            if (currentScrollY > 80) {
+                if (currentScrollY > lastScrollY) {
+                    // Scrolling down → slide header up & out
+                    header.classList.add('header-hidden');
+                } else {
+                    // Scrolling up → bring header back
+                    header.classList.remove('header-hidden');
+                }
+            } else {
+                // Near top — always show the header
+                header.classList.remove('header-hidden');
+            }
+        } else {
+            // Desktop — never hide
+            header.classList.remove('header-hidden');
+        }
+
+        lastScrollY = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });

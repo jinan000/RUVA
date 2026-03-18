@@ -10,15 +10,29 @@
     display: flex;
     align-items: center;
     z-index: 100;
-    transition: background-color var(--transition-med);
+    transition: background-color var(--transition-med),
+                transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hide header by sliding it up — used on mobile when scrolling down */
+.site-header.header-hidden {
+    transform: translateY(-105%);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .site-header.scrolled {
     background-color: var(--clr-background-dark);
-    /* Pure dark background */
     border-bottom: 1px solid rgba(198, 167, 94, 0.15);
-    /* Soft gold border beneath */
     backdrop-filter: blur(10px);
+}
+
+/* Mobile: keep header transparent at top (no background unless .scrolled) */
+@media (max-width: 768px) {
+    .site-header {
+        background-color: transparent;
+    }
 }
 
 .site-header.scrolled .brand-logo,
