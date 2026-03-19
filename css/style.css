@@ -419,6 +419,12 @@ img {
     padding-left: 0.3em;
 }
 
+@media (max-width: 768px) {
+    #scrolly-text-4 {
+        padding-top: 15vh;
+    }
+}
+
 /* ========================================= */
 
 /* Animations */
