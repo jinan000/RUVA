@@ -31,14 +31,113 @@
             margin-bottom: 0;
         }
 
-        .highlight-quote {
-            font-family: var(--font-heading);
-            font-size: clamp(1.5rem, 3vw, 2.25rem);
-            line-height: 1.3;
-            color: var(--clr-accent);
-            text-align: center;
+        /* ======================================================
+           Animated Quote Box
+           ====================================================== */
+        .quote-box-wrap {
             margin: 4rem 0;
-            padding: 0 5%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .quote-box {
+            position: relative;
+            max-width: 680px;
+            width: 100%;
+            padding: 3rem 3.5rem;
+            /* The animated SVG border lives here */
+        }
+
+        /* The four-sided border drawn via SVG stroke animation */
+        .quote-box .qb-border {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        .quote-box .qb-border rect {
+            fill: none;
+            stroke: #B8844A;
+            stroke-width: 1;
+            rx: 6;
+            vector-effect: non-scaling-stroke;
+            /* The draw-on trick: set stroke-dasharray to perimeter on scroll trigger */
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            transition: stroke-dashoffset 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .quote-box.in-view .qb-border rect {
+            stroke-dashoffset: 0;
+        }
+
+        /* Quotation mark glyphs */
+        .quote-box .qmark-open,
+        .quote-box .qmark-close {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: clamp(3.5rem, 7vw, 5rem);
+            line-height: 1;
+            color: #B8844A;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.6s ease 1.4s, transform 0.6s ease 1.4s;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .quote-box.in-view .qmark-open,
+        .quote-box.in-view .qmark-close {
+            opacity: 1;
+            transform: none;
+        }
+
+        .quote-box .qmark-open {
+            top: -0.4em;
+            left: -0.15em;
+            transform: translateY(-2px);
+        }
+
+        .quote-box .qmark-close {
+            bottom: -0.6em;
+            right: -0.5em;
+            transform: translateY(4px);
+        }
+
+        /* The quote text */
+        .quote-box blockquote {
+            font-family: var(--font-heading);
+            font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+            font-weight: 400;
+            line-height: 1.55;
+            color: var(--clr-text-primary);
+            text-align: center;
+            margin: 0;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s;
+        }
+
+        .quote-box.in-view blockquote {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Subtle gold glow on the box edges when visible */
+        .quote-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            box-shadow: 0 0 40px rgba(184, 132, 74, 0);
+            transition: box-shadow 1.2s ease 1s;
+            pointer-events: none;
+        }
+
+        .quote-box.in-view::after {
+            box-shadow: 0 0 40px rgba(184, 132, 74, 0.08), inset 0 0 20px rgba(184, 132, 74, 0.04);
         }
 
         .values-grid {
@@ -252,9 +351,22 @@
                     <p>But when it comes to jewellery, most brides are left to adjust — choosing from what already
                         exists.</p>
 
-                    <div class="highlight-quote">
-                        "At RUVA, we believe it should be the other way around. Jewellery should be created to suit the
-                        bride — not the bride to suit the jewellery."
+                    <!-- Animated Quote Box -->
+                    <div class="quote-box-wrap">
+                        <div class="quote-box" id="quoteBox">
+                            <!-- SVG border that draws itself in -->
+                            <svg class="qb-border" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <rect x="0.5" y="0.5" width="99" height="99" rx="1" ry="1"/>
+                            </svg>
+                            <!-- Large quotation glyphs -->
+                            <span class="qmark-open" aria-hidden="true">&ldquo;</span>
+                            <span class="qmark-close" aria-hidden="true">&rdquo;</span>
+                            <!-- The quote text -->
+                            <blockquote>
+                                At RUVA, we believe it should be the other way around. Jewellery should be created to
+                                suit the bride&nbsp;&mdash; not the bride to suit the jewellery.
+                            </blockquote>
+                        </div>
                     </div>
 
                     <p>RUVA was founded with a simple purpose: to design gold and diamond pieces that are made
@@ -267,8 +379,19 @@
                         worn.</p>
                     <p>RUVA is for brides who value intention — who want jewellery that feels personal, considered, and
                         lasting.</p>
-                    <div class="highlight-quote">
-                        Because bridal jewellery is not just worn for a day.<br>It becomes part of a family story.
+                    <!-- Second Animated Quote Box -->
+                    <div class="quote-box-wrap">
+                        <div class="quote-box" id="quoteBox2">
+                            <svg class="qb-border" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <rect x="0.5" y="0.5" width="99" height="99" rx="1" ry="1"/>
+                            </svg>
+                            <span class="qmark-open" aria-hidden="true">&ldquo;</span>
+                            <span class="qmark-close" aria-hidden="true">&rdquo;</span>
+                            <blockquote>
+                                Because bridal jewellery is not just worn for a day.<br>It becomes part of a family
+                                story.
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -458,6 +581,22 @@
             lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0);
+    </script>
+    <script>
+        // Animated Quote Box — IntersectionObserver triggers draw-in
+        (function() {
+            const boxes = document.querySelectorAll('.quote-box');
+            if (!boxes.length) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            boxes.forEach(box => observer.observe(box));
+        })();
     </script>
     <script src="js/main.js?v=13"></script>
 </body>
