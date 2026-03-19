@@ -429,68 +429,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!section || !canvas || !loader) return;
 
-        // Force hardware acceleration, isolate container, and retain centering
-        canvas.style.transform = 'translate(-50%, -50%) translateZ(0)';
-
-        // Optimization: Disable alpha if we know frames are opaque to help compositing
-        const ctx = canvas.getContext('2d', { alpha: false });
-        
-        const frameCount = 304; 
-        const images = new Array(frameCount + 1).fill(null);
-        let loadedInitial = 0;
+        const ctx = canvas.getContext('2d');
+        const frameCount = 480;
+        const images = [];
+        let loadedFrames = 0;
         let isLooping = false;
-        
-        const INITIAL_FRAMES = 12; // Preload a small batch first
-        const PRELOAD_AHEAD = 12;
-        const UNLOAD_THRESHOLD = 40;
 
         // Configuration for text visibility [startFadeIn, fullyVisible, startFadeOut, fullyHidden]
+        // Mapped to frame indexes
         const textTimings = [
-            [0, 10, 30, 40],       // Text 1: "Every detail begins with intention"
-            [70, 85, 120, 135],    // Text 2: "Crafted for Her Moment"
-            [220, 240, 290, 304]   // Text 4: "RUVA"
+            [0, 15, 45, 60],       // Text 1: "Every detail begins with intention"
+            [100, 120, 180, 200],  // Text 2: "Crafted for Her Moment"
+            [310, 330, 410, 430]   // Text 4: "RUVA"
         ];
 
-        const getPaddedIndex = (i) => Math.max(1, Math.min(frameCount, i)).toString().padStart(4, '0');
-
-        const loadFrame = (index) => {
-            if (index < 1 || index > frameCount || images[index]) return;
+        // 1. Preload Images
+        for (let i = 1; i <= frameCount; i++) {
             const img = new Image();
-            img.src = `frames/frame_${getPaddedIndex(index)}.webp`;
-            images[index] = img;
-        };
+            // Pad index with zeros: 1 -> 0001
+            const paddedIndex = i.toString().padStart(4, '0');
+            img.src = `frames/frame_${paddedIndex}.webp`;
 
-        const unloadFrame = (index) => {
-            if (images[index]) {
-                images[index].src = '';
-                images[index] = null;
-            }
-        };
-
-        // 1. Progressive Image Loading
-        for (let i = 1; i <= Math.min(INITIAL_FRAMES, frameCount); i++) {
-            const img = new Image();
-            img.src = `frames/frame_${getPaddedIndex(i)}.webp`;
-            img.onload = () => {
-                loadedInitial++;
-                if (loadedInitial === Math.min(INITIAL_FRAMES, frameCount)) {
+            const onLoadOrError = () => {
+                loadedFrames++;
+                if (loadedFrames === frameCount) {
+                    // All images loaded
                     loader.style.opacity = '0';
                     setTimeout(() => loader.style.display = 'none', 1000);
-                    handleResize(); 
+                    handleResize(); // Initial draw
                     startAnimationLoop();
                 }
             };
-            img.onerror = img.onload;
-            images[i] = img;
+
+            img.onload = onLoadOrError;
+            img.onerror = onLoadOrError;
+            images.push(img);
         }
 
         // 2. Responsive Canvas Scaling
-        const drawImageCentered = (img) => {
+        const renderFrame = (frameIndex) => {
+            const img = images[frameIndex];
+            if (!img || !img.complete) return;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             const hRatio = canvas.width / img.width;
             const vRatio = canvas.height / img.height;
-            
-            // Switch to 'contain' (Math.min) on portrait orientations to preserve clarity
-            // Use 'cover' (Math.max) for landscape screens
+
+            // On portrait / mobile screens the image aspect ratio is much wider than
+            // the viewport is tall, so 'cover' (Math.max) over-zooms and destroys
+            // clarity. Switch to 'contain' (Math.min) on portrait orientations so
+            // the full frame is visible. On landscape / desktop keep 'cover' so the
+            // animation fills the screen edge-to-edge.
             const isPortrait = canvas.height > canvas.width;
             const ratio = isPortrait ? Math.min(hRatio, vRatio) : Math.max(hRatio, vRatio);
 
@@ -504,80 +495,68 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         };
 
-        const renderFrame = (frameValue) => {
-            const frame1 = Math.floor(frameValue);
-            const frame2 = Math.min(frame1 + 1, frameCount);
-            const blendFactor = frameValue - frame1;
-            
-            const img1 = images[Math.max(1, frame1)];
-            const img2 = images[Math.max(1, frame2)];
-
-            const currentVelocity = Math.abs(currentFrameValue - prevFrameValue);
-            const isLowVelocity = currentVelocity < 0.8;
-            
-            if (img1 && img1.complete) {
-                // Ensure canvas is only cleared when we actually have a frame to draw to prevent flashing
-                ctx.fillStyle = '#120D0B'; // Dark background precisely matching var(--clr-background-dark)
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Intelligent frame blending only during low velocity
-                if (isLowVelocity && blendFactor > 0.05 && blendFactor < 0.95 && img2 && img2.complete) {
-                    ctx.globalAlpha = 1;
-                    drawImageCentered(img1);
-                    ctx.globalAlpha = blendFactor;
-                    drawImageCentered(img2);
-                    ctx.globalAlpha = 1; 
-                } else {
-                    // Fast scrolling skips blending, draws nearest
-                    const roundedImg = (blendFactor > 0.5 && img2 && img2.complete) ? img2 : img1;
-                    drawImageCentered(roundedImg);
-                }
-            }
-        };
-
         const handleResize = () => {
-            // Uncapped playback sensitivity to support ultra-crisp 3x+ retina mobile screens natively
+            // Scale the drawing buffer to the physical pixel count of the screen.
+            // Without this, high-DPR mobile displays (2x / 3x) upscale a low-res
+            // canvas buffer causing blurry / unclear frames.
             const dpr = window.devicePixelRatio || 1;
             const w = window.innerWidth;
             const h = window.innerHeight;
 
             canvas.width  = Math.round(w * dpr);
             canvas.height = Math.round(h * dpr);
+
+            // Pin the CSS display size to logical pixels so the element
+            // doesn't grow to fill the now-larger drawing buffer.
             canvas.style.width  = w + 'px';
             canvas.style.height = h + 'px';
 
-            renderFrame(currentFrameValue || 1);
+            // Re-render current frame based on scroll
+            updateScrollProgress();
         };
 
         window.addEventListener('resize', handleResize);
 
-        // 3. Scroll Tracking & Interpolation
-        let targetFrameValue = 1;
-        let currentFrameValue = 1;
-        let prevFrameValue = 1;
-        let scrollDirection = 1; 
+        // 3. Scroll Tracking & Text Interpolation
+        let currentScrollProgress = 0;
+        let lastRenderedFrame = -1;
 
         const interpolateOpacity = (currentFrame, timings) => {
             const [startIn, fullIn, startOut, fullOut] = timings;
+
             if (currentFrame < startIn) return 0;
-            if (currentFrame >= startIn && currentFrame < fullIn) return (currentFrame - startIn) / (fullIn - startIn);
-            if (currentFrame >= fullIn && currentFrame < startOut) return 1;
-            if (currentFrame >= startOut && currentFrame < fullOut) return 1 - ((currentFrame - startOut) / (fullOut - startOut));
-            return 0;
+            if (currentFrame >= startIn && currentFrame < fullIn) {
+                // Fading in
+                return (currentFrame - startIn) / (fullIn - startIn);
+            }
+            if (currentFrame >= fullIn && currentFrame < startOut) {
+                // Fully visible
+                return 1;
+            }
+            if (currentFrame >= startOut && currentFrame < fullOut) {
+                // Fading out
+                return 1 - ((currentFrame - startOut) / (fullOut - startOut));
+            }
+            return 0; // After fullOut
         };
 
         const updateScrollProgress = () => {
             const rect = section.getBoundingClientRect();
+
+            // Calculate progress 0 -> 1 based on section top & height
+            // rect.top is 0 when the top of the section hits the top of viewport.
+            // When rect.bottom hits the bottom of the viewport, progress should be 1.
             const totalScrollableDistance = rect.height - window.innerHeight;
             let progress = -rect.top / totalScrollableDistance;
+
+            // Clamp progress between 0 and 1
             progress = Math.max(0, Math.min(1, progress));
 
-            const newTarget = 1 + progress * (frameCount - 1);
-            if (newTarget > targetFrameValue) scrollDirection = 1;
-            else if (newTarget < targetFrameValue) scrollDirection = -1;
-            targetFrameValue = newTarget;
+            // Determine frame
+            const targetFrame = Math.floor(progress * (frameCount - 1));
 
-            // Handle fixed container visibility for clean layered scrolling
+            // Hide the fixed container completely if we scroll past the 400vh section
+            // This prevents it from bleeding through semi-transparent footers/sections
             const fixedContainer = document.querySelector('.scrolly-fixed');
             if (fixedContainer) {
                 if (rect.bottom <= 0) {
@@ -588,76 +567,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     fixedContainer.style.pointerEvents = 'auto';
                 }
             }
-        };
 
-        const manageMemory = (currentIdx, direction) => {
-            const lookBehind = 6;
-            let startLoad = direction >= 0 ? currentIdx - lookBehind : currentIdx - PRELOAD_AHEAD;
-            let endLoad = direction >= 0 ? currentIdx + PRELOAD_AHEAD : currentIdx + lookBehind;
-            
-            for (let i = Math.max(1, startLoad); i <= Math.min(frameCount, endLoad); i++) {
-                loadFrame(i);
+            // Only draw and process if frame changed or on initial load
+            if (targetFrame !== lastRenderedFrame) {
+                renderFrame(targetFrame);
+                lastRenderedFrame = targetFrame;
+
+                // Sync Text Opacities
+                textTimings.forEach((timings, idx) => {
+                    const el = textElements[idx];
+                    if (el) {
+                        el.style.opacity = interpolateOpacity(targetFrame, timings).toString();
+                        // Optional: slightly translate Y based on opacity for subtle float effect
+                        // const yOffset = (1 - el.style.opacity) * 10;
+                        // el.style.transform = `translateY(${yOffset}px)`;
+                    }
+                });
             }
-
-            for (let i = 1; i <= frameCount; i++) {
-                if (images[i] && (i < currentIdx - UNLOAD_THRESHOLD || i > currentIdx + UNLOAD_THRESHOLD)) {
-                    unloadFrame(i);
-                }
-            }
         };
-
-        const renderLoop = () => {
-            // Scroll inertia smoothing: tuned to visually settle in ~120ms (approx 7 frames at 60fps)
-            const diff = targetFrameValue - currentFrameValue;
-            currentFrameValue += diff * 0.35; 
-
-            // Update text elements relative to current smooth frame
-            textTimings.forEach((timings, idx) => {
-                const el = textElements[idx];
-                if (el) {
-                    el.style.opacity = interpolateOpacity(currentFrameValue, timings).toString();
-                }
-            });
-
-            // Prevent repetitive over-rendering if there is unnoticeable difference
-            if (Math.abs(currentFrameValue - prevFrameValue) > 0.005) {
-                renderFrame(currentFrameValue);
-                // Dynamically load/unload frames around the current index
-                manageMemory(Math.round(currentFrameValue), scrollDirection);
-                prevFrameValue = currentFrameValue;
-            }
-
-            requestAnimationFrame(renderLoop);
-        };
-
-        // Defer full sequence activation to viewport entry
-        let observer;
-        if ('IntersectionObserver' in window) {
-            observer = new IntersectionObserver((entries) => {
-                const entry = entries[0];
-                if (entry.isIntersecting) {
-                    canvas.style.willChange = 'transform';
-                    // Kickstart the memory management just inside viewport bounds
-                    manageMemory(Math.round(currentFrameValue), 1);
-                } else {
-                    canvas.style.willChange = 'auto'; 
-                }
-            }, { rootMargin: '200px 0px' });
-            observer.observe(section);
-        }
 
         const startAnimationLoop = () => {
             if (isLooping) return;
             isLooping = true;
 
-            // Optional GSAP integration if present; otherwise fallback passive scroll bind
+            // Drive from gsap.ticker so this runs AFTER Lenis applies its eased
+            // scroll position each frame — eliminating jitter from the old rAF loop.
             if (typeof gsap !== 'undefined') {
                 gsap.ticker.add(updateScrollProgress);
             } else {
-                window.addEventListener('scroll', updateScrollProgress, { passive: true });
+                const loop = () => { updateScrollProgress(); requestAnimationFrame(loop); };
+                requestAnimationFrame(loop);
             }
-            // Dedicated animation frame for decoupling rendering and DOM events
-            requestAnimationFrame(renderLoop);
         };
     };
 

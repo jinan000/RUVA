@@ -3,23 +3,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
 
 :root {
-    /* Color Palette - RUVA Heritage System */
-    --clr-bg: #1B1411;
-    /* Deep Coffee Brown (Heritage base / velvet) */
-    --clr-surface: #2A1E19;
-    /* Soft Mocha Dark */
-    --clr-surface-light: #3A2A23;
-    /* Soft Mocha Light */
-    --clr-text-primary: #F5F1EA;
-    /* Soft warm off-white */
-    --clr-text-secondary: #CBBBA5;
-    /* Muted warm beige */
-    --clr-accent: #C6A75E;
-    /* Metallic gold tone */
-    --clr-accent-hover: #D4AF37;
-    /* Brighter gold glow */
-    --clr-background-dark: #120D0B;
-    /* Darkest background vignette shade */
+    /* Color Palette - RUVA Logo System */
+    --clr-bg: #110E08;
+    /* Deep Obsidian */
+    --clr-surface: #1A1510;
+    /* Midnight Smoke */
+    --clr-surface-light: #2A2016;
+    /* Aged Walnut */
+    --clr-text-primary: #F0E4C8;
+    /* Ivory Cream */
+    --clr-text-secondary: #C8B898;
+    /* Parchment */
+    --clr-accent: #B8844A;
+    /* Antique Gold */
+    --clr-accent-hover: #E2C99A;
+    /* Pale Lustre */
+    --clr-background-dark: #0D0A06;
+    /* Void Black */
 
     /* Typography */
     --font-heading: 'Playfair Display', serif;
@@ -75,11 +75,11 @@ html.lenis {
 
 body {
     background-color: var(--clr-bg);
-    /* Dark luxury cinematic gradient overlay (Mocha / Coffee) */
+    /* Dark luxury cinematic gradient overlay */
     background-image:
-        radial-gradient(ellipse at top left, rgba(58, 42, 35, 0.45) 0%, rgba(42, 30, 25, 0.15) 40%, transparent 70%),
-        radial-gradient(ellipse at top right, rgba(58, 42, 35, 0.45) 0%, rgba(42, 30, 25, 0.15) 40%, transparent 70%),
-        radial-gradient(ellipse at center, transparent 40%, rgba(18, 13, 11, 0.8) 100%);
+        radial-gradient(ellipse at top left, rgba(42, 32, 22, 0.45) 0%, rgba(26, 21, 16, 0.15) 40%, transparent 70%),
+        radial-gradient(ellipse at top right, rgba(42, 32, 22, 0.45) 0%, rgba(26, 21, 16, 0.15) 40%, transparent 70%),
+        radial-gradient(ellipse at center, transparent 40%, rgba(13, 10, 6, 0.8) 100%);
     background-attachment: fixed;
     background-size: 100vw 100vh;
     background-repeat: no-repeat;
@@ -300,7 +300,7 @@ img {
     /* Scaled down significantly */
 
     /* Shiny Text Effect */
-    background-image: linear-gradient(120deg, #C9A76B 0%, #C9A76B 35%, #ffffff 50%, #C9A76B 65%, #C9A76B 100%);
+    background-image: linear-gradient(120deg, #C9A96E 0%, #C9A96E 35%, #F0E4C8 50%, #C9A96E 65%, #C9A96E 100%);
     background-size: 200% auto;
 
     /* Text clipping */
@@ -375,7 +375,7 @@ img {
     margin: 0 auto;
     max-width: 700px;
     /* Warm soft gold gradient for premium feel */
-    background-image: linear-gradient(120deg, #C9A76B 0%, #E8D9B0 45%, #C9A76B 100%);
+    background-image: linear-gradient(120deg, #C9A96E 0%, #E2C99A 45%, #C9A96E 100%);
     background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;

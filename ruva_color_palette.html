@@ -1,0 +1,282 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .pal-wrap {
+    font-family: 'Jost', sans-serif;
+    background: #0d0a06;
+    border-radius: 16px;
+    padding: 36px 32px 32px;
+    border: 0.5px solid #2a2016;
+  }
+  .pal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: #b8844a;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+  }
+  .group { margin-bottom: 28px; }
+  .group-label {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #5a4a32;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .swatches { display: flex; gap: 10px; flex-wrap: wrap; }
+  .swatch {
+    flex: 1;
+    min-width: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 0.5px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .swatch:hover { transform: translateY(-3px); }
+  .swatch-color {
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    padding: 8px;
+  }
+  .swatch-info {
+    background: #110e08;
+    padding: 10px 10px 11px;
+  }
+  .swatch-name {
+    font-size: 10px;
+    font-weight: 500;
+    color: #c8b898;
+    margin-bottom: 3px;
+    letter-spacing: 0.3px;
+  }
+  .swatch-hex {
+    font-size: 11px;
+    color: #7a6a52;
+    font-weight: 300;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+  }
+  .copy-hint {
+    width: 18px; height: 18px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .swatch:hover .copy-hint { opacity: 1; }
+  .copy-hint svg { width: 10px; height: 10px; }
+  .copied-toast {
+    position: absolute;
+    background: #b8844a;
+    color: #0d0a06;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+  }
+  .copied-toast.show { opacity: 1; }
+  .wrapper { position: relative; }
+  .divider-line {
+    height: 0.5px;
+    background: #1e1810;
+    margin: 4px 0 28px;
+  }
+  .palette-row {
+    display: flex;
+    height: 56px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border: 0.5px solid rgba(255,255,255,0.04);
+  }
+  .palette-row-swatch {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 6px;
+    cursor: pointer;
+    transition: flex 0.2s;
+    position: relative;
+  }
+  .palette-row-swatch:hover { flex: 1.6; }
+  .palette-row-swatch span {
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.3px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .palette-row-swatch:hover span { opacity: 1; }
+</style>
+
+<div class="wrapper">
+  <div class="copied-toast" id="toast">Copied</div>
+  <div class="pal-wrap">
+    <div class="pal-title">RUVA — Brand Colour Palette</div>
+
+    <div class="group">
+      <div class="group-label">Foundations — Dark bases</div>
+      <div class="swatches">
+        <div class="swatch" onclick="copy('#0d0a06', this)">
+          <div class="swatch-color" style="background:#0d0a06;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Void Black</div><div class="swatch-hex">#0D0A06</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#110e08', this)">
+          <div class="swatch-color" style="background:#110e08;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Deep Obsidian</div><div class="swatch-hex">#110E08</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#1a1510', this)">
+          <div class="swatch-color" style="background:#1a1510;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Midnight Smoke</div><div class="swatch-hex">#1A1510</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#2a2016', this)">
+          <div class="swatch-color" style="background:#2a2016;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Aged Walnut</div><div class="swatch-hex">#2A2016</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-label">Gold Signature — The RUVA mark</div>
+      <div class="swatches">
+        <div class="swatch" onclick="copy('#b8844a', this)">
+          <div class="swatch-color" style="background:#b8844a;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#0d0a06" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#0d0a06" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Antique Gold</div><div class="swatch-hex">#B8844A</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#c9a96e', this)">
+          <div class="swatch-color" style="background:#c9a96e;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#0d0a06" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#0d0a06" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Victorian Gold</div><div class="swatch-hex">#C9A96E</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#e2c99a', this)">
+          <div class="swatch-color" style="background:#e2c99a;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#0d0a06" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#0d0a06" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Pale Lustre</div><div class="swatch-hex">#E2C99A</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#f0e4c8', this)">
+          <div class="swatch-color" style="background:#f0e4c8;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#0d0a06" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#0d0a06" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Ivory Cream</div><div class="swatch-hex">#F0E4C8</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-label">Deep Accents — Richness &amp; drama</div>
+      <div class="swatches">
+        <div class="swatch" onclick="copy('#3d1a1a', this)">
+          <div class="swatch-color" style="background:#3d1a1a;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Dark Crimson</div><div class="swatch-hex">#3D1A1A</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#5c2020', this)">
+          <div class="swatch-color" style="background:#5c2020;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Burgundy</div><div class="swatch-hex">#5C2020</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#7a3030', this)">
+          <div class="swatch-color" style="background:#7a3030;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Deep Ruby</div><div class="swatch-hex">#7A3030</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#2a1f3d', this)">
+          <div class="swatch-color" style="background:#2a1f3d;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Midnight Violet</div><div class="swatch-hex">#2A1F3D</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group-label">Neutrals — Supporting tones</div>
+      <div class="swatches">
+        <div class="swatch" onclick="copy('#5a4a32', this)">
+          <div class="swatch-color" style="background:#5a4a32;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#fff" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#fff" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Tobacco</div><div class="swatch-hex">#5A4A32</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#8a7a62', this)">
+          <div class="swatch-color" style="background:#8a7a62;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#0d0a06" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#0d0a06" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Warm Stone</div><div class="swatch-hex">#8A7A62</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#c8b898', this)">
+          <div class="swatch-color" style="background:#c8b898;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#0d0a06" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#0d0a06" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Parchment</div><div class="swatch-hex">#C8B898</div></div>
+        </div>
+        <div class="swatch" onclick="copy('#e8dcc8', this)">
+          <div class="swatch-color" style="background:#e8dcc8;">
+            <div class="copy-hint"><svg viewBox="0 0 10 10" fill="none"><rect x="1" y="3" width="6" height="6" rx="1" stroke="#0d0a06" stroke-width="1"/><path d="M3 3V2a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H7" stroke="#0d0a06" stroke-width="1"/></svg></div>
+          </div>
+          <div class="swatch-info"><div class="swatch-name">Aged Linen</div><div class="swatch-hex">#E8DCC8</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider-line"></div>
+
+    <div class="group-label" style="margin-bottom:12px;">Full palette — gradient order</div>
+    <div class="palette-row">
+      <div class="palette-row-swatch" style="background:#0d0a06" onclick="copy('#0d0a06',this)"><span>#0D0A06</span></div>
+      <div class="palette-row-swatch" style="background:#110e08" onclick="copy('#110e08',this)"><span>#110E08</span></div>
+      <div class="palette-row-swatch" style="background:#1a1510" onclick="copy('#1a1510',this)"><span>#1A1510</span></div>
+      <div class="palette-row-swatch" style="background:#2a2016" onclick="copy('#2a2016',this)"><span>#2A2016</span></div>
+      <div class="palette-row-swatch" style="background:#3d1a1a" onclick="copy('#3d1a1a',this)"><span>#3D1A1A</span></div>
+      <div class="palette-row-swatch" style="background:#5c2020" onclick="copy('#5c2020',this)"><span>#5C2020</span></div>
+      <div class="palette-row-swatch" style="background:#5a4a32" onclick="copy('#5a4a32',this)"><span>#5A4A32</span></div>
+      <div class="palette-row-swatch" style="background:#b8844a" onclick="copy('#b8844a',this)"><span>#B8844A</span></div>
+      <div class="palette-row-swatch" style="background:#c9a96e" onclick="copy('#c9a96e',this)"><span>#C9A96E</span></div>
+      <div class="palette-row-swatch" style="background:#e2c99a" onclick="copy('#e2c99a',this)"><span>#E2C99A</span></div>
+      <div class="palette-row-swatch" style="background:#f0e4c8" onclick="copy('#f0e4c8',this)"><span>#F0E4C8</span></div>
+      <div class="palette-row-swatch" style="background:#e8dcc8" onclick="copy('#e8dcc8',this)"><span>#E8DCC8</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function copy(hex, el) {
+  navigator.clipboard.writeText(hex).catch(()=>{});
+  const toast = document.getElementById('toast');
+  toast.textContent = hex + ' copied';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1600);
+}
+</script>

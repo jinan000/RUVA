@@ -24,7 +24,7 @@
 
 .site-header.scrolled {
     background-color: var(--clr-background-dark);
-    border-bottom: 1px solid rgba(198, 167, 94, 0.15);
+    border-bottom: 1px solid rgba(184, 132, 74, 0.15);
     backdrop-filter: blur(10px);
 }
 
@@ -185,7 +185,7 @@
 .form-select:focus {
     outline: none;
     border-color: var(--clr-accent);
-    box-shadow: 0 0 10px rgba(198, 167, 94, 0.15);
+    box-shadow: 0 0 10px rgba(184, 132, 74, 0.15);
     /* Very soft gold glow */
 }
 
@@ -249,7 +249,7 @@
     cursor: pointer;
 }
 
-/* Desktop base transforms for bounce cards */
+/* Default Desktop Transforms */
 .card.card-0 { transform: rotate(5deg) translate(-150px); }
 .card.card-1 { transform: rotate(0deg) translate(-70px); }
 .card.card-2 { transform: rotate(-5deg); }
@@ -259,8 +259,8 @@
 /* Mobile: scale down bounce cards so they fit within viewport */
 @media (max-width: 600px) {
     .bounceCardsContainer {
-        width: min(90vw, 340px);
-        height: 200px;
+        width: min(90vw, 340px) !important;
+        height: 200px !important;
     }
 
     .card {
@@ -272,8 +272,8 @@
     .card.card-0 { transform: rotate(5deg)  translate(-88px); }
     .card.card-1 { transform: rotate(0deg)  translate(-42px); }
     .card.card-2 { transform: rotate(-5deg); }
-    .card.card-3 { transform: rotate(5deg)  translate(42px); }
-    .card.card-4 { transform: rotate(-5deg) translate(88px); }
+    .card.card-3 { transform: rotate(5deg)  translate(42px);  }
+    .card.card-4 { transform: rotate(-5deg) translate(88px);  }
 }
 
 .card .image {
@@ -286,14 +286,14 @@
 .card-spotlight {
     position: relative;
     border-radius: 1.5rem;
-    border: 1px solid rgba(198, 167, 94, 0.15);
+    border: 1px solid rgba(184, 132, 74, 0.15);
     /* RUVA matching border */
     background-color: var(--clr-surface);
     padding: 2rem;
     overflow: hidden;
     --mouse-x: 50%;
     --mouse-y: 50%;
-    --spotlight-color: rgba(255, 255, 255, 0.05);
+    --spotlight-color: rgba(201, 169, 110, 0.05);
 }
 
 .card-spotlight::before {
@@ -318,7 +318,7 @@
 .site-footer {
     background-color: var(--clr-surface);
     padding: 4rem 5%;
-    border-top: 1px solid rgba(198, 167, 94, 0.15);
+    border-top: 1px solid rgba(184, 132, 74, 0.15);
 }
 
 .footer-grid {
@@ -370,7 +370,7 @@
 .footer-bottom {
     margin-top: 4rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(198, 167, 94, 0.15);
+    border-top: 1px solid rgba(184, 132, 74, 0.15);
     display: flex;
     justify-content: space-between;
     font-size: 0.75rem;
@@ -544,7 +544,7 @@
   justify-content: center;
   pointer-events: auto;
   z-index: 99;
-  background: rgba(4, 12, 14, 0.95);
+  background: rgba(18, 13, 10, 0.95);
   backdrop-filter: blur(8px);
 }
 
