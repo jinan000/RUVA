@@ -405,7 +405,7 @@ img {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    padding-top: 15vh;
+    padding-top: 5vh;
     /* Sits near the top, moved down slightly from absolute top */
 }
 

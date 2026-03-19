@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const textTimings = [
             [0, 9, 26, 34],        // Text 1: "Every detail begins with intention"
             [57, 68, 140, 155],    // Text 2: "Crafted for Her Moment"
-            [176, 187, 260, 272]   // Text 4: "RUVA"
+            [176, 187, 248, 260]   // Text 4: "RUVA"
         ];
 
         // 1. Preload Images
