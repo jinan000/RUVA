@@ -509,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const frame2 = Math.min(frame1 + 1, frameCount);
             const blendFactor = frameValue - frame1;
             
-            ctx.fillStyle = 'rgb(4, 12, 14)'; // Dark background precisely matching var(--clr-background-dark)
+            ctx.fillStyle = '#120D0B'; // Dark background precisely matching var(--clr-background-dark)
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const img1 = images[Math.max(1, frame1)];
