@@ -509,9 +509,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const frame2 = Math.min(frame1 + 1, frameCount);
             const blendFactor = frameValue - frame1;
             
-            ctx.fillStyle = '#120D0B'; // Dark background precisely matching var(--clr-background-dark)
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             const img1 = images[Math.max(1, frame1)];
             const img2 = images[Math.max(1, frame2)];
 
@@ -519,6 +516,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const isLowVelocity = currentVelocity < 0.8;
             
             if (img1 && img1.complete) {
+                // Ensure canvas is only cleared when we actually have a frame to draw to prevent flashing
+                ctx.fillStyle = '#120D0B'; // Dark background precisely matching var(--clr-background-dark)
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
                 // Intelligent frame blending only during low velocity
                 if (isLowVelocity && blendFactor > 0.05 && blendFactor < 0.95 && img2 && img2.complete) {
                     ctx.globalAlpha = 1;
@@ -535,8 +536,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const handleResize = () => {
-            // Adaptive playback sensitivity and density
-            const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance on ultra-high DPR displays
+            // Uncapped playback sensitivity to support ultra-crisp 3x+ retina mobile screens natively
+            const dpr = window.devicePixelRatio || 1;
             const w = window.innerWidth;
             const h = window.innerHeight;
 
