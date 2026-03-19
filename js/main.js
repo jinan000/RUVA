@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!section || !canvas || !loader) return;
 
         const ctx = canvas.getContext('2d');
-        const frameCount = 480;
+        const frameCount = 272;
         const images = [];
         let loadedFrames = 0;
         let isLooping = false;
@@ -438,12 +438,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Configuration for text visibility [startFadeIn, fullyVisible, startFadeOut, fullyHidden]
         // Mapped to frame indexes
         const textTimings = [
-            [0, 15, 45, 60],       // Text 1: "Every detail begins with intention"
-            [100, 120, 180, 200],  // Text 2: "Crafted for Her Moment"
-            [310, 330, 410, 430]   // Text 4: "RUVA"
+            [0, 9, 26, 34],        // Text 1: "Every detail begins with intention"
+            [57, 68, 140, 155],    // Text 2: "Crafted for Her Moment"
+            [176, 187, 260, 272]   // Text 4: "RUVA"
         ];
 
         // 1. Preload Images
+        // Lock scrolling while large frame sequence loads
+        document.body.style.overflow = 'hidden';
+        if (typeof lenis !== 'undefined') lenis.stop();
+        
         for (let i = 1; i <= frameCount; i++) {
             const img = new Image();
             // Pad index with zeros: 1 -> 0001
@@ -456,6 +460,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // All images loaded
                     loader.style.opacity = '0';
                     setTimeout(() => loader.style.display = 'none', 1000);
+                    
+                    // Unlock scrolling
+                    document.body.style.overflow = '';
+                    if (typeof lenis !== 'undefined') lenis.start();
+
+                    lastRenderedFrame = -1; // Force immediate re-render
                     handleResize(); // Initial draw
                     startAnimationLoop();
                 }
@@ -552,8 +562,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // Clamp progress between 0 and 1
             progress = Math.max(0, Math.min(1, progress));
 
+            // Finish the animation early (e.g., at 85% of the scroll length)
+            // so the zoomed-out 'RUVA' stays on screen briefly before the next section overlaps
+            const animationFinishPoint = 0.85; 
+            const animationProgress = Math.min(1, progress / animationFinishPoint);
+
             // Determine frame
-            const targetFrame = Math.floor(progress * (frameCount - 1));
+            const targetFrame = Math.floor(animationProgress * (frameCount - 1));
 
             // Hide the fixed container completely if we scroll past the 400vh section
             // This prevents it from bleeding through semi-transparent footers/sections
