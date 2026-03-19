@@ -249,11 +249,18 @@
     cursor: pointer;
 }
 
+/* Desktop base transforms for bounce cards */
+.card.card-0 { transform: rotate(5deg) translate(-150px); }
+.card.card-1 { transform: rotate(0deg) translate(-70px); }
+.card.card-2 { transform: rotate(-5deg); }
+.card.card-3 { transform: rotate(5deg) translate(70px); }
+.card.card-4 { transform: rotate(-5deg) translate(150px); }
+
 /* Mobile: scale down bounce cards so they fit within viewport */
 @media (max-width: 600px) {
     .bounceCardsContainer {
-        width: min(90vw, 340px) !important;
-        height: 200px !important;
+        width: min(90vw, 340px);
+        height: 200px;
     }
 
     .card {
@@ -262,11 +269,11 @@
     }
 
     /* Re-map the translate offsets to smaller values that fit on mobile */
-    .card.card-0 { transform: rotate(5deg)  translate(-88px) !important; }
-    .card.card-1 { transform: rotate(0deg)  translate(-42px) !important; }
-    .card.card-2 { transform: rotate(-5deg)            !important; }
-    .card.card-3 { transform: rotate(5deg)  translate(42px)  !important; }
-    .card.card-4 { transform: rotate(-5deg) translate(88px)  !important; }
+    .card.card-0 { transform: rotate(5deg)  translate(-88px); }
+    .card.card-1 { transform: rotate(0deg)  translate(-42px); }
+    .card.card-2 { transform: rotate(-5deg); }
+    .card.card-3 { transform: rotate(5deg)  translate(42px); }
+    .card.card-4 { transform: rotate(-5deg) translate(88px); }
 }
 
 .card .image {
