@@ -378,6 +378,46 @@
     max-width: var(--container-max-width);
     margin-left: auto;
     margin-right: auto;
+    align-items: center;
+}
+
+/* Meet the Developers Link */
+.dev-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--clr-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.8rem;
+    background-color: rgba(184, 132, 74, 0.05);
+    border: 1px solid rgba(184, 132, 74, 0.15);
+    border-radius: 4px;
+    transition: all var(--transition-med);
+}
+
+.dev-link:hover {
+    color: var(--clr-text-primary);
+    background-color: rgba(184, 132, 74, 0.15);
+    border-color: rgba(184, 132, 74, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 8px rgba(184, 132, 74, 0.1);
+}
+
+.dev-icon {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    filter: brightness(0.8) sepia(1) hue-rotate(5deg) saturate(1.5);
+    transition: filter var(--transition-med), transform var(--transition-med);
+}
+
+.dev-link:hover .dev-icon {
+    filter: brightness(1) sepia(1) hue-rotate(5deg) saturate(2);
+    transform: scale(1.1);
 }
 
 /* --- Rotating Text Component --- */
