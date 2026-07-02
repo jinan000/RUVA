@@ -399,6 +399,42 @@
         gsap.ticker.lagSmoothing(0);
     </script>
     <script src="js/main.js?v=13"></script>
-</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".consultation-form");
+            if (form) {
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById("name") ? document.getElementById("name").value : "";
+                    const phone = document.getElementById("phone") ? document.getElementById("phone").value : "";
+                    const email = document.getElementById("email") ? document.getElementById("email").value : "";
+                    const occasion = document.getElementById("occasion") ? document.getElementById("occasion").value : "";
+                    const eventDate = document.getElementById("event_date") ? document.getElementById("event_date").value : "";
+                    const piece = document.getElementById("piece") ? document.getElementById("piece").value : "";
+                    const message = document.getElementById("message") ? document.getElementById("message").value : "";
+                    
+                    let body = "New Consultation Request\n\n";
+                    body += "Name: " + name + "\n";
+                    body += "Phone/WhatsApp: " + phone + "\n";
+                    body += "Email: " + email + "\n";
+                    body += "Occasion: " + occasion + "\n";
+                    if (eventDate) body += "Event Date: " + eventDate + "\n";
+                    body += "Preferred Piece: " + piece + "\n";
+                    if (message) body += "Design Vision/Notes:\n" + message + "\n";
+                    
+                    const fileInput = document.getElementById("inspiration");
+                    if (fileInput && fileInput.files.length > 0) {
+                        body += "\n(Note: You selected an inspiration image on the website. Please remember to manually attach it to this email before sending.)\n";
+                    }
 
+                    const subject = encodeURIComponent("Consultation Request: " + name);
+                    const encodedBody = encodeURIComponent(body);
+                    
+                    window.location.href = "mailto:contact@ruvahouse.com?subject=" + subject + "&body=" + encodedBody;
+                });
+            }
+        });
+    </script>
+</body>
 </html>
