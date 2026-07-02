@@ -139,32 +139,31 @@
             padding-top: 2rem;
         }
 
-        .file-upload-wrapper {
-            position: relative;
-            margin-bottom: 2rem;
+        .form-status {
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            display: none;
         }
 
-        .file-upload-label {
+        .form-status.success {
             display: block;
-            padding: 1.5rem;
-            border: 1px dashed var(--clr-text-secondary);
-            text-align: center;
-            cursor: pointer;
-            transition: background-color var(--transition-fast);
+            background-color: rgba(37, 211, 102, 0.12);
+            border: 1px solid #25D366;
+            color: #1a9e4a;
         }
 
-        .file-upload-label:hover {
-            background-color: var(--clr-surface);
+        .form-status.error {
+            display: block;
+            background-color: rgba(220, 53, 69, 0.12);
+            border: 1px solid #dc3545;
+            color: #dc3545;
         }
 
-        input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0;
-            cursor: pointer;
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -237,10 +236,13 @@
 
                     <!-- Form Side -->
                     <div>
-                        <form class="consultation-form" action="https://formsubmit.co/contact@ruvahouse.com" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="_subject" value="New Consultation Request">
-                            <!-- Optional: You can redirect to a thank you page by adding -->
-                            <!-- <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> -->
+                        <form class="consultation-form" id="consultationForm">
+                            <!-- Anti-spam: honeypot (hidden from real users) -->
+                            <input type="text" name="_gotcha" style="display:none !important;" tabindex="-1" autocomplete="off">
+                            <!-- Anti-spam: timestamp set on page load -->
+                            <input type="hidden" name="_timestamp" id="formTimestamp">
+
+                            <div id="formStatus" class="form-status"></div>
 
                             <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
                                 <div class="form-group">
@@ -266,37 +268,29 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="event_date">Event Date (if applicable)</label>
-                                    <input type="text" id="event_date" name="event_date" class="form-input" placeholder="e.g. DD/MM/YYYY or Next Summer">
+                                    <input type="text" id="event_date" name="Event Date" class="form-input" placeholder="e.g. 15 March 2026, Next Summer">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label" for="piece">Preferred Piece *</label>
-                                <select id="piece" name="piece" class="form-select" required>
+                                <select id="piece" name="Preferred Piece" class="form-select" required>
                                     <option value="" disabled selected>Select an option</option>
-                                    <option value="ring">Bespoke Ring</option>
-                                    <option value="necklace">Necklace</option>
-                                    <option value="earrings">Earrings</option>
-                                    <option value="set">Full Bridal Set</option>
-                                    <option value="other">Other</option>
+                                    <option value="Bespoke Ring">Bespoke Ring</option>
+                                    <option value="Necklace">Necklace</option>
+                                    <option value="Earrings">Earrings</option>
+                                    <option value="Full Bridal Set">Full Bridal Set</option>
+                                    <option value="Other">Other</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label" for="message">Design Vision or Notes</label>
-                                <textarea id="message" name="message" class="form-textarea"
+                                <textarea id="message" name="Design Vision" class="form-textarea"
                                     placeholder="Tell us about the outfit, neckline, or any specific ideas..."></textarea>
                             </div>
 
-                            <div class="file-upload-wrapper">
-                                <div class="file-upload-label">
-                                    <span class="text-overline" style="font-size: 0.85rem;">Click
-                                        to upload an outfit image or inspiration (Optional)</span>
-                                </div>
-                                <input type="file" id="inspiration" name="inspiration" accept="image/*">
-                            </div>
-
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">Schedule a
+                            <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Schedule a
                                 Consultation</button>
                         </form>
                     </div>
@@ -402,5 +396,103 @@
         gsap.ticker.lagSmoothing(0);
     </script>
     <script src="js/main.js?v=13"></script>
+    <script>
+        // Set timestamp on page load for bot timing detection
+        document.getElementById('formTimestamp').value = Date.now();
+
+        const form = document.getElementById('consultationForm');
+        const statusEl = document.getElementById('formStatus');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Client-side validation
+        function validateForm() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const piece = document.getElementById('piece').value;
+
+            if (!name || name.length < 2) return 'Please enter your full name (minimum 2 characters).';
+            if (!phone || phone.replace(/[\s\-\(\)\+]/g, '').length < 7) return 'Please enter a valid phone number.';
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.';
+            if (!piece) return 'Please select a preferred jewellery piece.';
+            return null;
+        }
+
+        // Send request with retry logic
+        async function sendRequest(payload, retries = 1) {
+            const response = await fetch('/api/consultation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok && retries > 0 && response.status >= 500) {
+                // Wait 1 second before retry on server errors
+                await new Promise(r => setTimeout(r, 1000));
+                return sendRequest(payload, retries - 1);
+            }
+
+            return response;
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Client-side validation
+            const validationError = validateForm();
+            if (validationError) {
+                statusEl.className = 'form-status error';
+                statusEl.textContent = validationError;
+                statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            statusEl.className = 'form-status';
+            statusEl.style.display = 'none';
+            statusEl.textContent = '';
+
+            // Build payload matching server-side field names
+            const payload = {
+                name: document.getElementById('name').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                occasion: document.getElementById('occasion').value.trim(),
+                eventDate: document.getElementById('event_date').value.trim(),
+                piece: document.getElementById('piece').value,
+                message: document.getElementById('message').value.trim(),
+                _gotcha: form.querySelector('[name="_gotcha"]').value,
+                _timestamp: document.getElementById('formTimestamp').value,
+            };
+
+            try {
+                const response = await sendRequest(payload);
+                const result = await response.json();
+
+                if (result.success) {
+                    statusEl.className = 'form-status success';
+                    statusEl.textContent = result.message || 'Your consultation request has been submitted successfully. Our team will contact you shortly.';
+                    form.reset();
+                    // Re-set the timestamp after reset
+                    document.getElementById('formTimestamp').value = Date.now();
+                } else {
+                    statusEl.className = 'form-status error';
+                    statusEl.textContent = result.error || 'Something went wrong. Please try again or contact us directly at contact@ruvahouse.com';
+                }
+            } catch (error) {
+                statusEl.className = 'form-status error';
+                statusEl.textContent = 'Network error. Please check your connection and try again, or email us at contact@ruvahouse.com';
+            }
+
+            statusEl.style.display = '';
+            statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Schedule a Consultation';
+        });
+    </script>
 </body>
 </html>
