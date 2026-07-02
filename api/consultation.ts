@@ -192,8 +192,8 @@ export default async function handler(
 
   // ── Build emails ──
   const timestamp = formatTimestamp(new Date());
-  const notificationHtml = buildNotificationEmail(data, timestamp, clientIp);
-  const autoReplyHtml = buildAutoReplyEmail(data.name);
+  const notificationText = buildNotificationEmail(data, timestamp);
+  const autoReplyText = buildAutoReplyEmail(data.name);
 
   // ── Send emails via Resend ──
   const resend = new Resend(RESEND_API_KEY);
@@ -201,20 +201,20 @@ export default async function handler(
   try {
     // Send both emails concurrently
     const [notificationResult, autoReplyResult] = await Promise.allSettled([
-      // 1. Notification to RUVA — shows customer name as sender, always delivered to contact@ruvahouse.com
+      // 1. Notification to RUVA
       resend.emails.send({
-        from: `${data.name} via RUVA House <${FROM_EMAIL}>`,
+        from: `RUVA House <${FROM_EMAIL}>`,
         to: [TO_EMAIL],
         replyTo: data.email,
-        subject: `New Consultation Request — ${data.name}`,
-        html: notificationHtml,
+        subject: `New Website Enquiry – ${data.subject}`,
+        text: notificationText,
       }),
       // 2. Auto-reply to customer
       resend.emails.send({
         from: `RUVA House <${FROM_EMAIL}>`,
         to: [data.email],
-        subject: `Your Consultation Request has been received — RUVA House`,
-        html: autoReplyHtml,
+        subject: `Thank you for contacting RUVA House`,
+        text: autoReplyText,
       }),
     ]);
 
@@ -223,18 +223,21 @@ export default async function handler(
       console.error('Notification email failed:', notificationResult.reason);
       throw new Error('Failed to send notification email.');
     }
-
     const notificationValue = notificationResult.value;
     if ('error' in notificationValue && notificationValue.error) {
       console.error('Resend notification error:', notificationValue.error);
       throw new Error('Email delivery failed.');
     }
 
-    // Log auto-reply status (non-critical)
+    // Check if the auto-reply email was sent
     if (autoReplyResult.status === 'rejected') {
-      console.warn('Auto-reply email failed (non-critical):', autoReplyResult.reason);
-    } else if ('error' in autoReplyResult.value && autoReplyResult.value.error) {
-      console.warn('Auto-reply Resend error (non-critical):', autoReplyResult.value.error);
+      console.error('Auto-reply email failed:', autoReplyResult.reason);
+      throw new Error('Failed to send auto-reply email.');
+    }
+    const autoReplyValue = autoReplyResult.value;
+    if ('error' in autoReplyValue && autoReplyValue.error) {
+      console.error('Resend auto-reply error:', autoReplyValue.error);
+      throw new Error('Auto-reply delivery failed.');
     }
 
     // ── Success response ──

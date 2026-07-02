@@ -15,6 +15,7 @@ export interface ConsultationData {
   eventDate: string;
   piece: string;
   message: string;
+  subject?: string;
 }
 
 /**
@@ -77,6 +78,7 @@ export function validateConsultationForm(body: Record<string, unknown>): {
   const eventDate = sanitizeInput(body.eventDate);
   const piece = sanitizeInput(body.piece);
   const message = sanitizeInput(body.message);
+  const subject = sanitizeInput(body.subject) || 'Consultation Request';
 
   // Required fields
   if (!name || name.length < 2) {
@@ -116,7 +118,7 @@ export function validateConsultationForm(body: Record<string, unknown>): {
   }
 
   return {
-    data: { name, phone, email, occasion, eventDate, piece, message },
+    data: { name, phone, email, occasion, eventDate, piece, message, subject },
     errors,
   };
 }
