@@ -237,7 +237,10 @@
 
                     <!-- Form Side -->
                     <div>
-                        <form class="consultation-form" action="#" method="POST" enctype="multipart/form-data">
+                        <form class="consultation-form" action="https://formsubmit.co/contact@ruvahouse.com" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="_subject" value="New Consultation Request">
+                            <!-- Optional: You can redirect to a thank you page by adding -->
+                            <!-- <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> -->
 
                             <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
                                 <div class="form-group">
@@ -263,7 +266,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" for="event_date">Event Date (if applicable)</label>
-                                    <input type="date" id="event_date" name="event_date" class="form-input">
+                                    <input type="text" id="event_date" name="event_date" class="form-input" placeholder="e.g. DD/MM/YYYY or Next Summer">
                                 </div>
                             </div>
 
@@ -399,42 +402,5 @@
         gsap.ticker.lagSmoothing(0);
     </script>
     <script src="js/main.js?v=13"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector(".consultation-form");
-            if (form) {
-                form.addEventListener("submit", function (e) {
-                    e.preventDefault();
-                    
-                    const name = document.getElementById("name") ? document.getElementById("name").value : "";
-                    const phone = document.getElementById("phone") ? document.getElementById("phone").value : "";
-                    const email = document.getElementById("email") ? document.getElementById("email").value : "";
-                    const occasion = document.getElementById("occasion") ? document.getElementById("occasion").value : "";
-                    const eventDate = document.getElementById("event_date") ? document.getElementById("event_date").value : "";
-                    const piece = document.getElementById("piece") ? document.getElementById("piece").value : "";
-                    const message = document.getElementById("message") ? document.getElementById("message").value : "";
-                    
-                    let body = "New Consultation Request\n\n";
-                    body += "Name: " + name + "\n";
-                    body += "Phone/WhatsApp: " + phone + "\n";
-                    body += "Email: " + email + "\n";
-                    body += "Occasion: " + occasion + "\n";
-                    if (eventDate) body += "Event Date: " + eventDate + "\n";
-                    body += "Preferred Piece: " + piece + "\n";
-                    if (message) body += "Design Vision/Notes:\n" + message + "\n";
-                    
-                    const fileInput = document.getElementById("inspiration");
-                    if (fileInput && fileInput.files.length > 0) {
-                        body += "\n(Note: You selected an inspiration image on the website. Please remember to manually attach it to this email before sending.)\n";
-                    }
-
-                    const subject = encodeURIComponent("Consultation Request: " + name);
-                    const encodedBody = encodeURIComponent(body);
-                    
-                    window.location.href = "mailto:contact@ruvahouse.com?subject=" + subject + "&body=" + encodedBody;
-                });
-            }
-        });
-    </script>
 </body>
 </html>
