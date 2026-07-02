@@ -12,7 +12,8 @@ import { buildNotificationEmail, buildAutoReplyEmail } from './lib/email-templat
 // ── Environment ──────────────────────────────
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = process.env.FROM_EMAIL || 'contact@ruvahouse.com';
-const TO_EMAIL = process.env.TO_EMAIL || 'contact@ruvahouse.com';
+// Always deliver consultation requests to this address
+const TO_EMAIL = 'contact@ruvahouse.com';
 
 // ── Allowed origins for CORS & origin validation ──
 const ALLOWED_ORIGINS = [
@@ -200,12 +201,12 @@ export default async function handler(
   try {
     // Send both emails concurrently
     const [notificationResult, autoReplyResult] = await Promise.allSettled([
-      // 1. Notification to RUVA
+      // 1. Notification to RUVA — shows customer name as sender, always delivered to contact@ruvahouse.com
       resend.emails.send({
-        from: `RUVA House <${FROM_EMAIL}>`,
+        from: `${data.name} via RUVA House <${FROM_EMAIL}>`,
         to: [TO_EMAIL],
         replyTo: data.email,
-        subject: `New Consultation Request — RUVA House`,
+        subject: `New Consultation Request — ${data.name}`,
         html: notificationHtml,
       }),
       // 2. Auto-reply to customer

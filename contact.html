@@ -400,6 +400,25 @@
         // Set timestamp on page load for bot timing detection
         document.getElementById('formTimestamp').value = Date.now();
 
+        // Pre-fill form fields from URL query parameters (e.g. from index.html CTA form redirect)
+        const urlParams = new URLSearchParams(window.location.search);
+        const nameParam = urlParams.get('name');
+        const phoneParam = urlParams.get('phone');
+        const occasionParam = urlParams.get('occasion');
+        
+        if (nameParam) {
+            const nameEl = document.getElementById('name');
+            if (nameEl) nameEl.value = decodeURIComponent(nameParam);
+        }
+        if (phoneParam) {
+            const phoneEl = document.getElementById('phone');
+            if (phoneEl) phoneEl.value = decodeURIComponent(phoneParam);
+        }
+        if (occasionParam) {
+            const occasionEl = document.getElementById('occasion');
+            if (occasionEl) occasionEl.value = decodeURIComponent(occasionParam);
+        }
+
         const form = document.getElementById('consultationForm');
         const statusEl = document.getElementById('formStatus');
         const submitBtn = document.getElementById('submitBtn');
